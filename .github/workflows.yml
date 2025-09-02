@@ -197,7 +197,7 @@ jobs:
       - name: Push to main/develop 🚚
         if: ${{ github.event_name == 'push' }}
         env:
-          DISCORD_WEBHOOK_URL: ${{ secrets.DISCORD_WEBHOOK_URL }}
+          DISCORD_WEBHOOK_URL: ${{ secrets.DISCORD_WEBHOOK }}
           REPO: ${{ github.repository }}
           BRANCH: ${{ github.ref_name }}
           COMPARE: ${{ github.event.compare }}
