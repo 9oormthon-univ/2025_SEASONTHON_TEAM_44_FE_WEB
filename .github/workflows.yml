@@ -1,0 +1,224 @@
+name: Discord Notifications
+
+# 워크플로우 실행 조건
+on:
+  pull_request:
+    types: [opened, synchronize, reopened, closed] # PR 생성/수정/재오픈/닫힘
+  create:
+    branches: ['*'] # 브랜치 생성
+  delete:
+    branches: ['*'] # 브랜치 삭제
+  issues:
+    types: [opened, closed] # 이슈 생성/닫힘
+  push:
+    branches: [develop, main] # develop, main 브랜치에 push
+
+jobs:
+  notify:
+    runs-on: ubuntu-latest
+    steps:
+      # -----------------------------
+      # PR 이벤트: 생성/재오픈/수정
+      # -----------------------------
+      - name: PR opened/reopened/sync 🔀
+        if: ${{ github.event_name == 'pull_request' && (github.event.action == 'opened' || github.event.action == 'reopened' || github.event.action == 'synchronize') }}
+        env:
+          DISCORD_WEBHOOK_URL: ${{ secrets.DISCORD_WEBHOOK }}
+          REPO: ${{ github.repository }}
+          PR_ACTION: ${{ github.event.action }}
+          PR_NUMBER: ${{ github.event.pull_request.number }}
+          PR_TITLE: ${{ github.event.pull_request.title }}
+          PR_URL: ${{ github.event.pull_request.html_url }}
+          PR_USER: ${{ github.event.pull_request.user.login }}
+          BASE: ${{ github.event.pull_request.base.ref }}
+          HEAD: ${{ github.event.pull_request.head.ref }}
+          COMMITS: ${{ github.event.pull_request.commits }}
+        run: |
+          payload=$(cat <<'JSON'
+          {
+            "embeds": [{
+              "title": "🔀 PR ${PR_ACTION}: #${PR_NUMBER} ${PR_TITLE}",
+              "url": "${PR_URL}",
+              "description": "by **${PR_USER}**  •  ${HEAD} → ${BASE}",
+              "color": 3447003,
+              "fields": [
+                { "name": "Repo", "value": "${REPO}", "inline": true },
+                { "name": "Commits", "value": "${COMMITS}", "inline": true }
+              ]
+            }]
+          }
+          JSON
+          )
+          curl -s -H "Content-Type: application/json" -d "$(echo "$payload" | envsubst)" "$DISCORD_WEBHOOK_URL"
+
+      # -----------------------------
+      # PR 이벤트: 머지됨
+      # -----------------------------
+      - name: PR merged ✅
+        if: ${{ github.event_name == 'pull_request' && github.event.action == 'closed' && github.event.pull_request.merged == true }}
+        env:
+          DISCORD_WEBHOOK_URL: ${{ secrets.DISCORD_WEBHOOK }}
+          REPO: ${{ github.repository }}
+          PR_NUMBER: ${{ github.event.pull_request.number }}
+          PR_TITLE: ${{ github.event.pull_request.title }}
+          PR_URL: ${{ github.event.pull_request.html_url }}
+          MERGER: ${{ github.actor }}
+        run: |
+          payload=$(cat <<'JSON'
+          {
+            "embeds": [{
+              "title": "✅ Merged: #${PR_NUMBER} ${PR_TITLE}",
+              "url": "${PR_URL}",
+              "description": "merged by **${MERGER}**",
+              "color": 5763719,
+              "footer": { "text": "${REPO}" }
+            }]
+          }
+          JSON
+          )
+          curl -s -H "Content-Type: application/json" -d "$(echo "$payload" | envsubst)" "$DISCORD_WEBHOOK_URL"
+
+      # -----------------------------
+      # PR 이벤트: 머지 안 된 채 닫힘
+      # -----------------------------
+      - name: PR closed without merge ❌
+        if: ${{ github.event_name == 'pull_request' && github.event.action == 'closed' && github.event.pull_request.merged != true }}
+        env:
+          DISCORD_WEBHOOK_URL: ${{ secrets.DISCORD_WEBHOOK }}
+          REPO: ${{ github.repository }}
+          PR_NUMBER: ${{ github.event.pull_request.number }}
+          PR_TITLE: ${{ github.event.pull_request.title }}
+          PR_URL: ${{ github.event.pull_request.html_url }}
+        run: |
+          payload=$(cat <<'JSON'
+          {
+            "embeds": [{
+              "title": "❌ Closed: #${PR_NUMBER} ${PR_TITLE}",
+              "url": "${PR_URL}",
+              "color": 15548997,
+              "footer": { "text": "${REPO}" }
+            }]
+          }
+          JSON
+          )
+          curl -s -H "Content-Type: application/json" -d "$(echo "$payload" | envsubst)" "$DISCORD_WEBHOOK_URL"
+
+      # -----------------------------
+      # 브랜치 생성
+      # -----------------------------
+      - name: Branch created 🌱
+        if: ${{ github.event_name == 'create' && github.ref_type == 'branch' }}
+        env:
+          DISCORD_WEBHOOK_URL: ${{ secrets.DISCORD_WEBHOOK }}
+          REPO: ${{ github.repository }}
+          BRANCH: ${{ github.ref }}
+          CREATOR: ${{ github.actor }}
+        run: |
+          payload=$(cat <<'JSON'
+          { "content": "🌱 **${REPO}** 브랜치 생성: `${BRANCH}` (by ${CREATOR})" }
+          JSON
+          )
+          curl -s -H "Content-Type: application/json" -d "$(echo "$payload" | envsubst)" "$DISCORD_WEBHOOK_URL"
+
+      # -----------------------------
+      # 브랜치 삭제
+      # -----------------------------
+      - name: Branch deleted 🔥
+        if: ${{ github.event_name == 'delete' && github.ref_type == 'branch' }}
+        env:
+          DISCORD_WEBHOOK_URL: ${{ secrets.DISCORD_WEBHOOK }}
+          REPO: ${{ github.repository }}
+          BRANCH: ${{ github.ref }}
+          ACTOR: ${{ github.actor }}
+        run: |
+          payload=$(cat <<'JSON'
+          { "content": "🔥 **${REPO}** 브랜치 삭제: `${BRANCH}` (by ${ACTOR})" }
+          JSON
+          )
+          curl -s -H "Content-Type: application/json" -d "$(echo "$payload" | envsubst)" "$DISCORD_WEBHOOK_URL"
+
+      # -----------------------------
+      # 이슈 생성
+      # -----------------------------
+      - name: Issue opened 🐛
+        if: ${{ github.event_name == 'issues' && github.event.action == 'opened' }}
+        env:
+          DISCORD_WEBHOOK_URL: ${{ secrets.DISCORD_WEBHOOK }}
+          REPO: ${{ github.repository }}
+          NUM: ${{ github.event.issue.number }}
+          TITLE: ${{ github.event.issue.title }}
+          URL: ${{ github.event.issue.html_url }}
+          USER: ${{ github.event.issue.user.login }}
+        run: |
+          payload=$(cat <<'JSON'
+          {
+            "embeds": [{
+              "title": "🐛 Issue #${NUM}: ${TITLE}",
+              "url": "${URL}",
+              "description": "opened by **${USER}**",
+              "color": 15844367,
+              "footer": { "text": "${REPO}" }
+            }]
+          }
+          JSON
+          )
+          curl -s -H "Content-Type: application/json" -d "$(echo "$payload" | envsubst)" "$DISCORD_WEBHOOK_URL"
+
+      # -----------------------------
+      # 이슈 닫힘
+      # -----------------------------
+      - name: Issue closed 🧹
+        if: ${{ github.event_name == 'issues' && github.event.action == 'closed' }}
+        env:
+          DISCORD_WEBHOOK_URL: ${{ secrets.DISCORD_WEBHOOK }}
+          REPO: ${{ github.repository }}
+          NUM: ${{ github.event.issue.number }}
+          TITLE: ${{ github.event.issue.title }}
+          URL: ${{ github.event.issue.html_url }}
+          ACTOR: ${{ github.actor }}
+        run: |
+          payload=$(cat <<'JSON'
+          {
+            "embeds": [{
+              "title": "🧹 Closed Issue #${NUM}: ${TITLE}",
+              "url": "${URL}",
+              "description": "closed by **${ACTOR}**",
+              "color": 1018364,
+              "footer": { "text": "${REPO}" }
+            }]
+          }
+          JSON
+          )
+          curl -s -H "Content-Type: application/json" -d "$(echo "$payload" | envsubst)" "$DISCORD_WEBHOOK_URL"
+
+      # -----------------------------
+      # develop / main 브랜치로 push
+      # -----------------------------
+      - name: Push to main/develop 🚚
+        if: ${{ github.event_name == 'push' }}
+        env:
+          DISCORD_WEBHOOK_URL: ${{ secrets.DISCORD_WEBHOOK_URL }}
+          REPO: ${{ github.repository }}
+          BRANCH: ${{ github.ref_name }}
+          COMPARE: ${{ github.event.compare }}
+          PUSER: ${{ github.actor }}
+        run: |
+          # 커밋 개수 계산 (jq 사용)
+          COUNT=$(jq '.commits | length' "$GITHUB_EVENT_PATH")
+          export COUNT
+          
+          # 디스코드 payload 생성 및 전송
+          payload=$(cat <<'JSON'
+          {
+            "embeds": [{
+              "title": "🚚 Push to ${BRANCH}",
+              "url": "${COMPARE}",
+              "description": "**${PUSER}** pushed ${COUNT} commit(s).",
+              "color": 5793266,
+              "footer": { "text": "${REPO}" }
+            }]
+          }
+          JSON
+          )
+          
+          echo "$payload" | envsubst | curl -s -H "Content-Type: application/json" -d @- "$DISCORD_WEBHOOK_URL"
