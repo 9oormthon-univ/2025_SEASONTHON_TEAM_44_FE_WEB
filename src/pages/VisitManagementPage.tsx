@@ -1,6 +1,10 @@
+import VisitManagement from "@components/visit/VisitManagement.tsx";
+
 const VisitManagementPage = () => {
   return (
-    <div>VisitManagementPage</div>
+    <>
+      <VisitManagement />
+    </>
   );
 };
 
