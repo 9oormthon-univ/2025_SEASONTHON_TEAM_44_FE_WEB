@@ -1,6 +1,6 @@
 import styled from "@emotion/styled";
 import VisitManagementList from "@components/visit/VisitManagementList.tsx";
-import VisitManagementPageAction from "@components/visit/VisitManagementPageAction.tsx";
+import ListPageAction from "@components/common/ListPageAction.tsx";
 import { useHandleSearchBar } from "@hooks/visit/useHandleSearchBar.ts";
 import { useHandleListPageNumber } from "@hooks/visit/useHandleListPageNumber.ts";
 import VisitManagementHeader from "@components/visit/VisitManagementHeader.tsx";
@@ -15,7 +15,7 @@ const VisitManagement = () => {
     <VisitManagementContainer>
       <VisitManagementHeader inputText={inputText} onChangeInputText={onChangeInputText} onSubmit={() => console.log("submit")} />
       <VisitManagementList />
-      <VisitManagementPageAction currentPage={currentPage} onChangePage={onChangePage} pageSize={PAGE_SIZE} />
+      <ListPageAction currentPage={currentPage} onChangePage={onChangePage} pageSize={PAGE_SIZE} />
     </VisitManagementContainer>
   );
 };
