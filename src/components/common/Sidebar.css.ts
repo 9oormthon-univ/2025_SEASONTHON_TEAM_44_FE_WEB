@@ -6,12 +6,14 @@ interface ActiveProps {
 
 const SideBarContainer = styled.div`
   min-width: 242px;
-  height: 50%;
+  height: 50vh;
   min-height: 477px;
   display: flex;
   flex-direction: column;
   border-bottom-right-radius: 20px;
-  border: 1px solid ${({ theme }) => theme.colors.grayScale.gray50};
+  border-right: 1px solid ${({ theme }) => theme.colors.grayScale.gray50};
+  border-bottom: 1px solid ${({ theme }) => theme.colors.grayScale.gray50};
+  background-color: ${({ theme }) => theme.colors.white};
 `;
 
 const SideBarMenuItem = styled.div<ActiveProps>`
