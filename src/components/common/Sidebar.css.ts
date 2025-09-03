@@ -5,7 +5,8 @@ interface ActiveProps {
 }
 
 const SideBarContainer = styled.div`
-  min-width: 242px;
+  width: 15%;
+  min-width: 168px;
   height: 50vh;
   min-height: 477px;
   display: flex;

@@ -10,7 +10,12 @@ const QRGeneratorContainer = styled.div`
   text-align: center;
   white-space: pre-wrap;
   min-width: 500px;
+  width: 1240px;
   gap: 20px;
+  
+  @media (max-width: 1240px) {
+    width: 100%;
+  }
 `;
 
 const QRGeneratorTitle = styled.div`
