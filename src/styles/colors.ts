@@ -4,7 +4,8 @@ export const colors = {
     primary700: '#ff4625',
     primary500: '#ff564d',
     primary400: '#ff7d76',
-    primary200: '#fff3ef',
+    primary200: '#ffc3b8',
+    primary50: '#fff3ef',
   },
   grayScale: {
     gray800: '#3d3b3a',
@@ -15,6 +16,12 @@ export const colors = {
     gray100: '#d8d4d3',
     gray50: '#f0eae6',
     gray30: '#f8f4f2',
+  },
+  semantic: {
+    blue: '#4d7dff',
+  },
+  transparent: {
+    black20per: '#1b1b1b20',
   },
   white: '#fefcfb',
   black: '#1b1b1b',

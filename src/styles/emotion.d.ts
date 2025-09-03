@@ -1,6 +1,6 @@
 import '@emotion/react';
 
-declare module '@emotion/styled' {
+declare module '@emotion/react' {
   import { ColorsType } from "@styles/colors.ts";
   import { FontsType } from "@styles/fonts.ts";
 

@@ -1,0 +1,28 @@
+import styled from "@emotion/styled";
+
+interface ActiveProps {
+  isActive?: boolean;
+}
+
+const SideBarContainer = styled.div`
+  width: 15%;
+  min-width: 168px;
+  height: 50vh;
+  min-height: 477px;
+  display: flex;
+  flex-direction: column;
+  border-bottom-right-radius: 20px;
+  border-right: 1px solid ${({ theme }) => theme.colors.grayScale.gray50};
+  border-bottom: 1px solid ${({ theme }) => theme.colors.grayScale.gray50};
+  background-color: ${({ theme }) => theme.colors.white};
+`;
+
+const SideBarMenuItem = styled.div<ActiveProps>`
+  padding: 20px;
+  text-align: end;
+  font: ${({ theme }) => theme.fonts.sub1};
+  cursor: pointer;
+  background-color: ${({ isActive, theme }) => isActive ? theme.colors.primary.primary200 : 'transparent'};
+`;
+
+export { SideBarContainer, SideBarMenuItem };
