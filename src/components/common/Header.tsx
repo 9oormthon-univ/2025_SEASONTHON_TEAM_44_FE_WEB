@@ -13,4 +13,5 @@ const HeaderContainer = styled.div`
   flex-direction: column;
   padding: 20px 60px;
   background-color: ${({ theme }) => theme.colors.white};
+  border-bottom: 2px solid ${({ theme }) => theme.colors.grayScale.gray30};
 `;
