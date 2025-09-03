@@ -12,6 +12,7 @@ const SideBarContainer = styled.div`
   flex-direction: column;
   border-bottom-right-radius: 20px;
   border: 1px solid ${({ theme }) => theme.colors.grayScale.gray50};
+  background-color: ${({ theme }) => theme.colors.white};
 `;
 
 const SideBarMenuItem = styled.div<ActiveProps>`
