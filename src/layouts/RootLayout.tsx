@@ -40,6 +40,7 @@ const Content = styled.main`
   flex-direction: column;
   padding: 40px 10% 211px 98px;
   width: 100%;
+  overflow-x: hidden;
   overflow-y: auto;
   
   @media (max-width: 1600px) {
