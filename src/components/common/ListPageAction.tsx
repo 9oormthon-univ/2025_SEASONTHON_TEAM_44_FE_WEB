@@ -2,25 +2,25 @@ import IcArrowLeft from "@icon/ic-arrow-left.svg";
 import IcArrowRight from "@icon/ic-arrow-right.svg";
 import styled from "@emotion/styled";
 
-interface VisitManagementPageActionProps {
+interface ListPageActionProps {
   currentPage: number;
   onChangePage: (page: number, pageSize: number) => void;
   pageSize: number;
 }
 
-const VisitManagementPageAction = ({ currentPage, onChangePage, pageSize }: VisitManagementPageActionProps) => {
+const ListPageAction = ({ currentPage, onChangePage, pageSize }: ListPageActionProps) => {
   return (
-    <VisitManagementPageActionSection>
+    <ListPageActionSection>
       <img src={IcArrowLeft} alt="" onClick={() => onChangePage(currentPage - 1, pageSize)} />
       <div>{currentPage} <span>/ {pageSize}</span></div>
       <img src={IcArrowRight} alt="" onClick={() => onChangePage(currentPage + 1, pageSize)} />
-    </VisitManagementPageActionSection>
+    </ListPageActionSection>
   );
 };
 
-export default VisitManagementPageAction;
+export default ListPageAction;
 
-const VisitManagementPageActionSection = styled.div`
+const ListPageActionSection = styled.div`
   display: flex;
   flex-direction: row;
   gap: 30px;
