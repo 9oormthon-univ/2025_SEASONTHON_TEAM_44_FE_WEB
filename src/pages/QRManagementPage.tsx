@@ -16,5 +16,6 @@ export default QRManagementPage;
 const QRGeneratorContainer = styled.div`
   display: flex;
   flex-direction: column;
+  align-items: center;
   gap: 60px;
 `;

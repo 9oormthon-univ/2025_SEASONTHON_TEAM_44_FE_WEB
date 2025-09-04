@@ -13,6 +13,10 @@ const QRGeneratorContainer = styled.div`
   width: 1240px;
   gap: 20px;
   
+  @media (max-width: 1480px) {
+    width: 100%;
+  }
+  
   @media (max-width: 1240px) {
     width: 100%;
   }
