@@ -7,6 +7,7 @@ import NoticesPage from "@pages/NoticesPage.tsx";
 import MyInfoPage from "@pages/MyInfoPage.tsx";
 import DashboardPage from "@pages/DashboardPage.tsx";
 import ProtectedRouteLayout from "@layouts/ProtectedRouteLayout.tsx";
+import SignUpPage from "@pages/SignUpPage.tsx";
 
 export const router = createBrowserRouter([
   {
@@ -16,6 +17,10 @@ export const router = createBrowserRouter([
       {
         index: true,
         element: <LoginPage />,
+      },
+      {
+        'path': 'sign-up',
+        element: <SignUpPage />,
       },
     ],
   },
