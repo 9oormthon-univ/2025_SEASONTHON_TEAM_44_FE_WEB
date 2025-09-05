@@ -36,15 +36,15 @@ const HeaderProfileSection = styled.div`
   align-items: center;
   
   img {
-    width: 38px;
-    height: 38px;
+    width: 35px;
+    height: 35px;
     background-color: #C4C4C4;
     border-radius: 50%;
     object-fit: cover;
   }
   
   div {
-    font: ${({ theme }) => theme.fonts.sub1};
+    font: ${({ theme }) => theme.fonts.sub2};
     color: ${({ theme }) => theme.colors.black};
   }
 `;

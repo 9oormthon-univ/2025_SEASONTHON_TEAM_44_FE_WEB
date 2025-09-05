@@ -38,7 +38,7 @@ const Inner = styled.div`
 const Content = styled.main`
   display: flex;
   flex-direction: column;
-  padding: 40px 10% 211px 98px;
+  padding: 40px 5% 211px 5%;
   width: 100%;
   overflow-x: hidden;
   overflow-y: auto;
