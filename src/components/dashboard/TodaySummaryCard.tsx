@@ -46,7 +46,7 @@ const TodaySummaryCardContainer = styled.div`
   border-radius: 20px;
   border: none;
   gap: 32px;
-  min-width: 430px;
+  width: 100%;
 `;
 
 const TodaySummaryTitle = styled.div`
@@ -63,7 +63,7 @@ const TodaySummaryContentSection = styled.div`
 const TodaySummaryContentItem = styled.div`
   display: flex;
   flex-direction: column;
-  min-width: 221px;
+  width: 100%;
   gap: 10px;
   padding: 20px;
   background-color: ${({ theme }) => theme.colors.grayScale.gray30};

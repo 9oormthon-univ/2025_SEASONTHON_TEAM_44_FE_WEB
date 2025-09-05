@@ -19,7 +19,7 @@ const TotalQRScansContainer = styled.div`
   border-radius: 20px;
   border: none;
   gap: 32px;
-  min-width: 430px;
+  width: 100%;
 `;
 
 const TotalQRScansTitle = styled.div`

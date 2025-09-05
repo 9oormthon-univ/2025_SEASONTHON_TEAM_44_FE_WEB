@@ -39,7 +39,7 @@ const RegionalRegularRateContainer = styled.div`
   background-color: ${({ theme }) => theme.colors.white};
   padding: 40px 30px;
   width: 100%;
-  min-width: 591px;
+  min-width: 520px;
   border-radius: 20px;
   gap: 30px;
 `;

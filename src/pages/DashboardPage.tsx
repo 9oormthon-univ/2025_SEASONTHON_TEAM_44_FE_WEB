@@ -30,11 +30,18 @@ const DashboardContainer = styled.div`
   align-items: center;
   background-color: ${({ theme }) => theme.colors.grayScale.gray50};
   width: 100%;
-  min-width: 1240px;
+  min-width: 559px;
 `;
 
 const DashboardSection = styled.div`
   display: flex;
   flex-direction: row;
   gap: 20px;
+  width: 100%;
+  
+  @media (max-width: 1380px) {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
 `;
