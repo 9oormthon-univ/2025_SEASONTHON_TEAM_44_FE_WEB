@@ -1,4 +1,5 @@
 import ImgExampleInfo from "@img/img-example-info.png";
+import ImgExampleProfile from "@img/img-example-profile.png";
 
 export interface MyInfo {
   profile: {
@@ -19,7 +20,7 @@ export interface MyInfo {
 export const myInfo: MyInfo = {
   profile: {
     name: "다시온님",
-    profileImage: undefined,
+    profileImage: ImgExampleProfile,
     address: "분당구 판교동",
   },
   storeInfo: {

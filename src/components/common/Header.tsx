@@ -1,12 +1,13 @@
 import styled from "@emotion/styled";
 import IcLogo from "@icon/ic-logo.svg"
+import ImgExampleProfile from "@img/img-example-profile.png"
 
 const Header = () => {
   return (
     <HeaderContainer>
       <img src={IcLogo} alt=""/>
       <HeaderProfileSection>
-        <img />
+        <img  src={ImgExampleProfile}/>
         <div>다시온님</div>
       </HeaderProfileSection>
     </HeaderContainer>
