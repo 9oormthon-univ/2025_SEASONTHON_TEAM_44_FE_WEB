@@ -1,12 +1,13 @@
 import styled from "@emotion/styled";
 import IcLogo from "@icon/ic-logo.svg"
+import ImgExampleProfile from "@img/img-example-profile.png"
 
 const Header = () => {
   return (
     <HeaderContainer>
       <img src={IcLogo} alt=""/>
       <HeaderProfileSection>
-        <img />
+        <img  src={ImgExampleProfile}/>
         <div>다시온님</div>
       </HeaderProfileSection>
     </HeaderContainer>
@@ -35,15 +36,15 @@ const HeaderProfileSection = styled.div`
   align-items: center;
   
   img {
-    width: 38px;
-    height: 38px;
+    width: 35px;
+    height: 35px;
     background-color: #C4C4C4;
     border-radius: 50%;
     object-fit: cover;
   }
   
   div {
-    font: ${({ theme }) => theme.fonts.sub1};
+    font: ${({ theme }) => theme.fonts.sub2};
     color: ${({ theme }) => theme.colors.black};
   }
 `;
