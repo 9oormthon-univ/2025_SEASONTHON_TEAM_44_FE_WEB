@@ -25,7 +25,7 @@ export const getStoreInfo = async () => {
 
 export const existsStore = async () => {
   try {
-    const response = await axiosInstance.get<BaseResponse<boolean>>("/owner/store/exists");
+    const response = await axiosInstance.get<BaseResponse<boolean>>("/owner/store/me/exists");
     return response.data;
   } catch ( error ) {
     console.error(error);
