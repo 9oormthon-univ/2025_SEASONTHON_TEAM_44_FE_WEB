@@ -34,7 +34,7 @@ const VisitManagementContainer = styled.div`
   flex-direction: column;
   background-color: ${({ theme }) => theme.colors.white};
   border-radius: 20px;
-  padding: 52px 105px;
+  padding: 20px 30px;
   align-items: center;
   min-width: 1240px;
   gap: 20px;

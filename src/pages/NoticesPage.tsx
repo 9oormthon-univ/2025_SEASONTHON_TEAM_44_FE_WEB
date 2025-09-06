@@ -56,20 +56,26 @@ const NoticesContainer = styled.div<{ currentTab: string }>`
   gap: 20px;
   background-color: ${({ theme }) => theme.colors.white};
   border-radius: 20px;
-  padding: 52px 210px;
+  padding: 20px 30px;
   align-items: center;
-  min-width: 1240px;
-
-  @media (max-width: 1240px) {
-    width: ${({ currentTab }) => currentTab === "send" ? "100%" : undefined};
-    min-width: ${({ currentTab }) => currentTab === "send" ? "100%" : undefined};
+  justify-content: center;
+  margin-left: auto;
+  margin-right: auto;
+  width: 100%;
+  max-width: ${({ currentTab }) => currentTab === "send" ? "520px" : "100%"};;
+  min-width: ${({ currentTab }) => currentTab === "send" ? "520px" : "1240px"};;
+  
+  /*@media (max-width: 1240px) {
+    width: ${({ currentTab }) => currentTab === "send" ? "520px" : undefined};
+    /!*min-width: ${({ currentTab }) => currentTab === "send" ? "100%" : undefined};*!/
     padding: ${({ currentTab }) => currentTab === "send" ? "52px 10%" : "52px 210px"};
-  }
+  }*/
 `;
 
 const NoticesMessageHistoryWrapper = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 20px;
+  width: 100%;
+  gap: 15px;
 `;
