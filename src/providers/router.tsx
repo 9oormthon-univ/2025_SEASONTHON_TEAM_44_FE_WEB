@@ -8,6 +8,7 @@ import MyInfoPage from "@pages/MyInfoPage.tsx";
 import DashboardPage from "@pages/DashboardPage.tsx";
 import ProtectedRouteLayout from "@layouts/ProtectedRouteLayout.tsx";
 import SignUpPage from "@pages/SignUpPage.tsx";
+import CallbackPage from "@pages/CallbackPage.tsx";
 
 export const router = createBrowserRouter([
   {
@@ -21,6 +22,10 @@ export const router = createBrowserRouter([
       {
         'path': 'sign-up',
         element: <SignUpPage />,
+      },
+      {
+        path: 'login',
+        element: <CallbackPage />,
       },
     ],
   },
