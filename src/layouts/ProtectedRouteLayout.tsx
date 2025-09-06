@@ -10,10 +10,10 @@ const ProtectedRouteLayout = () => {
     queryFn: () => existsStore(),
   })
 
-  if (isSuccess) {
-    if (isLoggedIn && data) {
+  if (isSuccess && data) {
+    if (isLoggedIn && data?.response) {
       return <Navigate to="/dashboard" replace />;
-    } else if (isLoggedIn && !data) {
+    } else if (isLoggedIn && !data.response) {
       return <Navigate to="/sign-up" replace />;
     }
   }
