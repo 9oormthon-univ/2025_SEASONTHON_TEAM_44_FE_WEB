@@ -81,8 +81,8 @@ const DonutChart = ({
 export default DonutChart;
 
 const DonutChartContainer = styled.div`
-  width: 220px;
-  height: 220px;
+  width: 250px;
+  height: 250px;
 
   .recharts-wrapper *:focus {
     outline: none;
