@@ -1,7 +1,8 @@
 import { Navigate, Outlet } from "react-router-dom";
+import { useAuthStore } from "@stores/useAuthStore.ts";
 
 const ProtectedRouteLayout = () => {
-  const isLoggedIn = false // Replace with actual authentication logic
+  const { isLoggedIn } = useAuthStore();
   if (isLoggedIn) {
     return <Navigate to="/dashboard" replace />;
   }
