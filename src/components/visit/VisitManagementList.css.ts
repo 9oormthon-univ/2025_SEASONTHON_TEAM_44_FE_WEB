@@ -48,4 +48,16 @@ const VisitManagementListItem = styled.div`
   }
 `;
 
-export { VisitManagementListContainer, VisitManagementLabelSection, VisitManagementLabel, VisitManagementItemsSection, VisitManagementListItem };
+const VisitManagementNoneList = styled.div`
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  text-align: center;
+  justify-content: center;
+  margin-top: 200px;
+  font: ${({ theme }) => theme.fonts.body2};
+  color: ${({ theme }) => theme.colors.grayScale.gray500};
+`
+
+export { VisitManagementListContainer, VisitManagementLabelSection, VisitManagementLabel, VisitManagementItemsSection, VisitManagementListItem, VisitManagementNoneList };

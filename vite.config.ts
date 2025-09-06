@@ -11,7 +11,7 @@ export default defineConfig({
     alias: [
       { find: '@', replacement: path.resolve(__dirname, 'src') },
       { find: '@icon', replacement: path.resolve(__dirname, 'src/assets/icon') },
-      { find: '@img', replacement: path.resolve(__dirname, 'src/assets/img') },
+      { find: '@img', replacement: path.resolve(__dirname, 'src/assets/image') },
       { find: '@styles', replacement: path.resolve(__dirname, 'src/styles') },
       { find: '@components', replacement: path.resolve(__dirname, 'src/components') },
       { find: '@hooks', replacement: path.resolve(__dirname, 'src/hooks') },

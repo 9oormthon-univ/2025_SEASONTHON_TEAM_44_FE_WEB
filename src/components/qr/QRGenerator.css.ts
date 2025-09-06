@@ -6,12 +6,16 @@ const QRGeneratorContainer = styled.div`
   background-color: ${({ theme }) => theme.colors.white};
   align-items: center;
   border-radius: 20px;
-  padding: 60px 10%;
+  padding: 60px 5%;
   text-align: center;
   white-space: pre-wrap;
   min-width: 500px;
-  width: 1240px;
+  width: 100%;
   gap: 20px;
+  
+  @media (max-width: 1480px) {
+    width: 100%;
+  }
   
   @media (max-width: 1240px) {
     width: 100%;

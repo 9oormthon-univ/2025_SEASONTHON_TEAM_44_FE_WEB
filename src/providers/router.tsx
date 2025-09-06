@@ -1,39 +1,75 @@
 import { createBrowserRouter } from "react-router";
 import RootLayout from "@layouts/RootLayout.tsx";
-import HomePage from "@pages/HomePage.tsx";
+import LoginPage from "@pages/LoginPage.tsx";
 import QRManagementPage from "@pages/QRManagementPage.tsx";
 import VisitManagementPage from "@pages/VisitManagementPage.tsx";
 import NoticesPage from "@pages/NoticesPage.tsx";
 import MyInfoPage from "@pages/MyInfoPage.tsx";
 import DashboardPage from "@pages/DashboardPage.tsx";
+import ProtectedRouteLayout from "@layouts/ProtectedRouteLayout.tsx";
+import SignUpPage from "@pages/SignUpPage.tsx";
 
 export const router = createBrowserRouter([
   {
     path: '/',
+    element: <ProtectedRouteLayout />,
+    children: [
+      {
+        index: true,
+        element: <LoginPage />,
+      },
+      {
+        'path': 'sign-up',
+        element: <SignUpPage />,
+      },
+    ],
+  },
+  {
+    path: '/dashboard',
     element: <RootLayout />,
     children: [
       {
         index: true,
-        element: <HomePage />,
-      },
-      {
-        path: 'dashboard',
         element: <DashboardPage />,
       },
+    ],
+  },
+  {
+    path: '/qr-management',
+    element: <RootLayout />,
+    children: [
       {
-        path: 'qr-management',
+        index: true,
         element: <QRManagementPage />,
       },
+    ],
+  },
+  {
+    path: '/visit-management',
+    element: <RootLayout />,
+    children: [
       {
-        path: 'visit-management',
+        index: true,
         element: <VisitManagementPage />,
       },
+    ],
+  },
+  {
+    path: '/notices',
+    element: <RootLayout />,
+    children: [
       {
-        path: 'notices',
+        index: true,
         element: <NoticesPage />,
       },
+    ],
+  },
+  {
+    path: '/my-info',
+    element: <RootLayout />,
+    children: [
       {
-        path: 'my-info',
+        index: true,
         element: <MyInfoPage />,
       },
     ],

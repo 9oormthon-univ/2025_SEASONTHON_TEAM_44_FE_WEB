@@ -1,11 +1,19 @@
 import QRGenerator from "@components/qr/QRGenerator.tsx";
 import QRCodeTutorial from "@components/qr/QRCodeTutorial.tsx";
 import styled from "@emotion/styled";
+import { useGetStoreInfo } from "@hooks/store/useGetStoreInfo.ts";
 
 const QRManagementPage = () => {
+  const { data, isSuccess, isPending } = useGetStoreInfo();
+
+  if (!isSuccess && isPending) return null;
+
+  const storeId = data?.id; // <- 두 번 옵셔널 체이닝
+  console.log(storeId);
+
   return (
     <QRGeneratorContainer>
-      <QRGenerator />
+      <QRGenerator id={storeId} />
       <QRCodeTutorial />
     </QRGeneratorContainer>
   );
@@ -16,5 +24,6 @@ export default QRManagementPage;
 const QRGeneratorContainer = styled.div`
   display: flex;
   flex-direction: column;
+  align-items: center;
   gap: 60px;
 `;

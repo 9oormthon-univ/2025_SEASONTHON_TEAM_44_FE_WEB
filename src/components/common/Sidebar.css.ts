@@ -5,10 +5,7 @@ interface ActiveProps {
 }
 
 const SideBarContainer = styled.div`
-  width: 15%;
-  min-width: 168px;
-  height: 50vh;
-  min-height: 477px;
+  min-width: 160px;
   display: flex;
   flex-direction: column;
   border-bottom-right-radius: 20px;
@@ -18,9 +15,9 @@ const SideBarContainer = styled.div`
 `;
 
 const SideBarMenuItem = styled.div<ActiveProps>`
-  padding: 20px;
-  text-align: end;
-  font: ${({ theme }) => theme.fonts.sub1};
+  padding: 15px 20px;
+  text-align: start;
+  font: ${({ theme }) => theme.fonts.body1};
   cursor: pointer;
   background-color: ${({ isActive, theme }) => isActive ? theme.colors.primary.primary200 : 'transparent'};
 `;

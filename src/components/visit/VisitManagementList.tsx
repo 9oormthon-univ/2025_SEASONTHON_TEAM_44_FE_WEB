@@ -1,6 +1,8 @@
 import * as S from "@components/visit/VisitManagementList.css.ts";
+import type { VisitItem } from "@apis/visit.ts";
+import { VisitManagementNoneList } from "@components/visit/VisitManagementList.css.ts";
 
-const visitList = [
+/*const visitList = [
   {
     id: 0,
     visitDate: "2023-08-01 14:30",
@@ -73,9 +75,16 @@ const visitList = [
     count: 1,
     etc: "신규 단골 등록",
   },
-];
+];*/
 
-const VisitManagementList = () => {
+interface VisitManagementListProps {
+  items: VisitItem[];
+  isFetching?: boolean;
+}
+
+const fmt = (iso: string) => new Date(iso).toLocaleString();
+
+const VisitManagementList = ({ items }: VisitManagementListProps) => {
   return (
     <S.VisitManagementListContainer>
       <S.VisitManagementLabelSection>
@@ -86,15 +95,20 @@ const VisitManagementList = () => {
         <S.VisitManagementLabel>비고</S.VisitManagementLabel>
       </S.VisitManagementLabelSection>
       <S.VisitManagementItemsSection>
-        {visitList.map((visitor) => (
-          <S.VisitManagementListItem key={visitor.id}>
-            <div>{visitor.visitDate}</div>
-            <div>{visitor.name}</div>
-            <div>{visitor.type}</div>
-            <div>{visitor.count}회</div>
-            <div>{visitor.etc}</div>
+        {items.length === 0 && (
+            <VisitManagementNoneList>방문 · 적립 내역이 존재하지 않아요</VisitManagementNoneList>
+        )}
+
+        {items.map((v, idx) => (
+          <S.VisitManagementListItem key={`${v.dateTime}-${v.customerName}-${idx}`}>
+            <div>{fmt(v.dateTime)}</div>
+            <div>{v.customerName}</div>
+            <div>{v.action}</div>
+            <div>{v.cumulative}회</div>
+            <div>{v.note}</div>
           </S.VisitManagementListItem>
         ))}
+
       </S.VisitManagementItemsSection>
     </S.VisitManagementListContainer>
   );
