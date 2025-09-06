@@ -1,13 +1,17 @@
 import MyInfoHeader from "@components/my/MyInfoHeader.tsx";
 import MyStoreInfo from "@components/my/MyStoreInfo.tsx";
-import { myInfo } from "@/types/myInfo.ts";
 import styled from "@emotion/styled";
+import { useGetStoreInfo } from "@hooks/store/useGetStoreInfo.ts";
 
 const MyInfoPage = () => {
+  const { data, isSuccess } = useGetStoreInfo();
+
+  if (!data && !isSuccess) return null;
+
   return (
     <MyInfoContainer>
-      <MyInfoHeader {...myInfo.profile} />
-      <MyStoreInfo {...myInfo.storeInfo} />
+      <MyInfoHeader address={data?.address} />
+      <MyStoreInfo response={data} />
     </MyInfoContainer>
   );
 };

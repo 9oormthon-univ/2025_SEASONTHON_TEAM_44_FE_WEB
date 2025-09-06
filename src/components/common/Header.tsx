@@ -1,14 +1,19 @@
 import styled from "@emotion/styled";
 import IcLogo from "@icon/ic-logo.svg"
-import ImgExampleProfile from "@img/img-example-profile.png"
+import ImgProfileDefault from "@img/img-example-profile.png";
+import { useGetSimpleUserInfo } from "@hooks/users/useGetSimpleUserInfo.ts";
 
 const Header = () => {
+  const { data, isPending } = useGetSimpleUserInfo();
+
+  if (!data || isPending) return null;
+
   return (
     <HeaderContainer>
       <img src={IcLogo} alt=""/>
       <HeaderProfileSection>
-        <img  src={ImgExampleProfile}/>
-        <div>다시온님</div>
+        <img  src={data.response.profileImage ? data.response.profileImage : ImgProfileDefault}/>
+        <div>{data.response.name}님</div>
       </HeaderProfileSection>
     </HeaderContainer>
   );
