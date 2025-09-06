@@ -2,33 +2,42 @@ import DonutChart from "@components/dashboard/DonutChart.tsx";
 import styled from "@emotion/styled";
 import theme from "@styles/theme.ts";
 
-const noticeData = [
-  { label: "확인 처리 완료", value: 75, color: theme.colors.primary.primary500, textColor: theme.colors.primary.primary500 },
-  { label: "미확인", value: 25, color: theme.colors.grayScale.gray100, textColor: theme.colors.grayScale.gray500 },
-];
+interface NoticeResponseRateProps {
+  notiId: number
+  title: string
+  confirmedCount: number
+  unconfirmedCount: number
+}
 
-const NoticeResponseRate = () => {
+const NoticeResponseRate = ({ unconfirmedCount, confirmedCount, title }: NoticeResponseRateProps) => {
+
+  const newNoticeData = [
+    { label: "확인 처리 완료", value: confirmedCount, color: theme.colors.primary.primary500, textColor: theme.colors.primary.primary500 },
+    { label: "미확인", value: unconfirmedCount, color: theme.colors.grayScale.gray100, textColor: theme.colors.grayScale.gray500 },
+  ]
   return (
     <NoticeResponseRateContainer>
       <NoticeResponseRateTitle>공지 반응률</NoticeResponseRateTitle>
-      <NoticeResponseRateContentSection>
-        <DonutChart
-          data={noticeData}
-          percentBadgeIndex={0} // 75% 강조
-          valueSuffix="%"
-        />
-        <TodaySummaryContentItemValueSection>
-          <TodaySummaryContentItemValuteTitle>마감 2시간 전 특급 할인!</TodaySummaryContentItemValuteTitle>
-          <TodaySummaryContentItemValue isConfirmed={true}>
-            <div />
-            <div>확인 처리 완료</div>
-          </TodaySummaryContentItemValue>
-          <TodaySummaryContentItemValue isConfirmed={false}>
-            <div />
-            <div>미확인</div>
-          </TodaySummaryContentItemValue>
-        </TodaySummaryContentItemValueSection>
-      </NoticeResponseRateContentSection>
+      {(title) ? (
+        <NoticeResponseRateContentSection>
+          <DonutChart
+            data={newNoticeData}
+            percentBadgeIndex={0} // 75% 강조
+            valueSuffix="%"
+          />
+          <TodaySummaryContentItemValueSection>
+            <TodaySummaryContentItemValuteTitle>{title}</TodaySummaryContentItemValuteTitle>
+            <TodaySummaryContentItemValue isConfirmed={true}>
+              <div />
+              <div>확인 처리 완료</div>
+            </TodaySummaryContentItemValue>
+            <TodaySummaryContentItemValue isConfirmed={false}>
+              <div />
+              <div>미확인</div>
+            </TodaySummaryContentItemValue>
+          </TodaySummaryContentItemValueSection>
+        </NoticeResponseRateContentSection>
+      ) : <div>등록된 공지가 없습니다</div> }
     </NoticeResponseRateContainer>
   );
 };
@@ -73,6 +82,7 @@ const TodaySummaryContentItemValueSection = styled.div`
 `;
 
 const TodaySummaryContentItemValuteTitle = styled.div`
+  margin-right: auto;
   font: ${({ theme }) => theme.fonts.sub2};
   color: ${({ theme }) => theme.colors.black};
   margin-bottom: 10px;

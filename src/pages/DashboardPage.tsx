@@ -3,17 +3,23 @@ import RegionalRegularRate from "@components/dashboard/RegionalRegularRate.tsx";
 import TodaySummaryCard from "@components/dashboard/TodaySummaryCard.tsx";
 import TotalQRScans from "@components/dashboard/TotalQRScans.tsx";
 import styled from "@emotion/styled";
+import { useGetDashboard } from "@hooks/dashboard/useGetDashboard.ts";
 
 const DashboardPage = () => {
+  const { data, isPending, isSuccess } = useGetDashboard();
+
+  if (!isSuccess && isPending) return null;
+  const { totalVisits, notiResponse, regionRatios, todaySummary } = data?.response ?? {};
+
   return (
     <DashboardContainer>
       <DashboardSection>
-        <TotalQRScans />
-        <TodaySummaryCard />
+        <TotalQRScans totalVisitCount={totalVisits!} />
+        <TodaySummaryCard {...todaySummary!} />
       </DashboardSection>
       <DashboardSection>
-        <RegionalRegularRate />
-        <NoticeResponseRate />
+        <RegionalRegularRate regionRatios={regionRatios!} />
+        <NoticeResponseRate {...notiResponse!}/>
       </DashboardSection>
     </DashboardContainer>
   );

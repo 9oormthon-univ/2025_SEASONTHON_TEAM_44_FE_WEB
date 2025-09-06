@@ -1,10 +1,14 @@
 import styled from "@emotion/styled";
 
-const TotalQRScans = () => {
+interface TotalQRScansProps {
+  totalVisitCount: number;
+}
+
+const TotalQRScans = ({ totalVisitCount }: TotalQRScansProps) => {
   return (
     <TotalQRScansContainer>
       <TotalQRScansTitle>현재까지 QR 스캔 횟수</TotalQRScansTitle>
-      <TotalQRScansCount><span>61</span>회</TotalQRScansCount>
+      <TotalQRScansCount><span>{totalVisitCount}</span>회</TotalQRScansCount>
     </TotalQRScansContainer>
   );
 };

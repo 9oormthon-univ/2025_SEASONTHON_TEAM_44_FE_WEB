@@ -7,7 +7,7 @@ import NoticesConfirmModal from "@components/notices/NoticesConfirmModal.tsx";
 import NoticesMessageSuccessModal from "@components/notices/NoticesMessageSuccessModal.tsx";
 
 const NoticesForm = () => {
-  const { register, handleSubmit, receiver, onSubmit, onChange } = useMessageForm();
+  const { register, handleSubmit, receiver, onSubmit, onChange, getValues } = useMessageForm();
   const [isOpen, setIsOpen] = useState(false);
   const [isConfirm, setIsConfirm] = useState(false);
 
@@ -32,15 +32,24 @@ const NoticesForm = () => {
         {/* 메세지 본문 */}
         <S.NoticesFormInputSection>
           <S.NoticesFormInputLabel>본문</S.NoticesFormInputLabel>
-          <S.NoticesFormTextArea placeholder="본문을 입력하세요" />
+          <S.NoticesFormTextArea placeholder="본문을 입력하세요" {...register("message")} />
         </S.NoticesFormInputSection>
         <S.NoticesFormButton onClick={() => {
           setIsOpen(true);
           handleSubmit(onSubmit);
         }}>공지 보내기</S.NoticesFormButton>
       </S.NoticesFormContainer>
-      {isOpen && <NoticesConfirmModal handleClose={() => setIsOpen(false)} setIsConfirm={() => setIsConfirm(true)} />}
-      {isConfirm && <NoticesMessageSuccessModal handleClose={() => setIsConfirm(false)} />}
+      {isOpen && <NoticesConfirmModal
+        handleClose={() => setIsOpen(false)}
+        setIsConfirm={() => setIsConfirm(true)}
+        title={getValues("title")}
+        content={getValues("message")}
+        target={getValues("receiver")}
+      />}
+      {isConfirm && <NoticesMessageSuccessModal handleClose={() => {
+        setIsConfirm(false);
+        window.location.reload(); // 새로고침
+      }} />}
     </>
   );
 };
