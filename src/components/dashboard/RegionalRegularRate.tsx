@@ -37,6 +37,9 @@ function mapRegionRatiosToDonutData(
   regionRatios: RegionRatio[],
   theme: any
 ): DonutDatum[] {
+  if (!regionRatios) {
+    return [];
+  }
   return regionRatios
     .sort((a, b) => b.ratio - a.ratio) // ratio 높은 순
     .slice(0, colors.length) // 최대 6개만

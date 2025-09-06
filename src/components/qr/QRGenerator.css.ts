@@ -38,7 +38,9 @@ const QRGeneratorDescription = styled.div`
 `;
 
 const QRGeneratorButton = styled.button`
-  padding: 17px 131px;
+  padding: 17px 5%;
+  width: 230px;
+  white-space: nowrap;
   border-radius: 12px;
   background-color: ${({ theme }) => theme.colors.primary.primary500};
   color: ${({ theme }) => theme.colors.white};

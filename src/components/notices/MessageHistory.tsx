@@ -1,6 +1,8 @@
 import * as S from '@components/notices/MessageHistory.css.ts';
 import type { NoticeItem } from "@apis/notice.ts";
 import { receiverType } from "@/types/notices.ts";
+import { useState } from "react";
+import NoticeDetailModal from "@components/notices/NoticeDetailModal.tsx";
 
 interface MessageHistoryProps {
   items: NoticeItem[];
@@ -9,6 +11,14 @@ interface MessageHistoryProps {
 const fmt = (iso: string) => new Date(iso).toLocaleString(); // 필요시 커스텀 포맷
 
 const MessageHistory = ({ items }: MessageHistoryProps) => {
+  const [isOpen, setIsOpen] = useState(false);
+  const [selectedItem, setSelectedItem] = useState<NoticeItem | null>(null);
+
+  const openModal = (item: NoticeItem) => {
+    setSelectedItem(item);
+    setIsOpen(true);
+  };
+
   return (
     <S.MessageHistoryContainer>
       <S.MessageHistoryLabelSection>
@@ -27,7 +37,7 @@ const MessageHistory = ({ items }: MessageHistoryProps) => {
         )}
 
         {items.map((m) => (
-          <S.MessageHistoryListItem key={m.id}>
+          <S.MessageHistoryListItem key={m.id} onClick={() => openModal(m)}>
             <div>{fmt(m.createdAt)}</div>
             <div>{m.title}</div>
             <div>{receiverType.find((option) => option.value === m.target)?.label}</div>
@@ -36,6 +46,7 @@ const MessageHistory = ({ items }: MessageHistoryProps) => {
           </S.MessageHistoryListItem>
         ))}
       </S.MessageHistoryItemsSection>
+      {isOpen && <NoticeDetailModal noticeItem={selectedItem!} onClose={() => setIsOpen(false)} />}
     </S.MessageHistoryContainer>
   );
 };

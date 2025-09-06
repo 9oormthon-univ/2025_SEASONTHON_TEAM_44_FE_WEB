@@ -6,7 +6,11 @@ const MessageHistoryContainer = styled.div`
   border-radius: 20px;
   border: 2px solid ${({ theme }) => theme.colors.grayScale.gray50};
   height: 515px;
-  width: 1030px;
+  width: 100%;
+  min-width: 0;
+  flex: 1 1 auto;          /* 부모가 flex면 필요 */
+  align-self: stretch;     /* 부모가 flex면 필요 */
+  box-sizing: border-box;  /* 테두리 포함 */
 `;
 
 const MessageHistoryLabelSection = styled.div`
@@ -15,13 +19,14 @@ const MessageHistoryLabelSection = styled.div`
   align-items: center;
   justify-content: space-between;
   padding: 15px 10px;
+  width: 100%;
   background-color: ${({ theme }) => theme.colors.primary.primary50};
   border-top-right-radius: 20px;
   border-top-left-radius: 20px;
 `;
 
 const MessageHistoryLabel = styled.div`
-  width: 200px;
+  width: 100%;
   text-align: center;
   font: ${({ theme }) => theme.fonts.sub1};
   color: ${({ theme }) => theme.colors.black};
@@ -41,9 +46,10 @@ const MessageHistoryListItem = styled.div`
   font: ${({ theme }) => theme.fonts.body2};
   color: ${({ theme }) => theme.colors.black};
   cursor: pointer;
-  
+
   div {
-    width: 200px;
+    width: 100%;
+    white-space: nowrap;
     text-align: center;
   }
 `;
