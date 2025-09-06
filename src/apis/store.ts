@@ -1,4 +1,5 @@
 import { axiosInstance } from "@apis/axiosInstance.ts";
+import type { BaseResponse } from "@/types/baseResponse.ts";
 
 export interface StoreInfoResponse {
   id: number;
@@ -20,4 +21,13 @@ export const getStoreInfo = async () => {
   } catch ( error ) {
     console.error(error);
   }
-}
+};
+
+export const existsStore = async () => {
+  try {
+    const response = await axiosInstance.get<BaseResponse<boolean>>("/owner/store/exists");
+    return response.data;
+  } catch ( error ) {
+    console.error(error);
+  }
+};
