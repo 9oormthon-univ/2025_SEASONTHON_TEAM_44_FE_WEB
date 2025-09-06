@@ -1,22 +1,45 @@
 import styled from "@emotion/styled";
 import theme from "@styles/theme.ts";
+import { receiverOptions } from "@/types/notices.ts";
+import { usePostNotice } from "@hooks/notices/usePostNotice.ts";
+import type { NoticeRequest } from "@apis/notice.ts";
 
 interface NoticesConfirmModalProp {
   handleClose: () => void;
   onSubmit?: () => void;
   setIsConfirm: () => void;
+  title: string;
+  content: string;
+  target: "ALL" | "BASIC" | "CERTIFIED" | null;
 }
 
-const noticesConfirmModal = ({ handleClose, onSubmit, setIsConfirm }: NoticesConfirmModalProp) => {
+const NoticesConfirmModal = ({
+                               handleClose,
+                               setIsConfirm,
+                               title,
+                               content,
+                               target,
+                             }: NoticesConfirmModalProp) => {
+  const { mutate, isSuccess } = usePostNotice();
   const onOverlayClick = (e: React.MouseEvent<HTMLDivElement>) => {
     if (e.currentTarget === e.target) handleClose();
   };
 
   const handleSubmit = () => {
-    if (onSubmit) onSubmit();
+    const request: NoticeRequest = {
+      title: title,
+      content: content,
+      target: target as "ALL" | "BASIC" | "CERTIFIED",
+    };
+    mutate(request);
+  };
+
+  if (isSuccess) {
     handleClose();
     setIsConfirm();
-  };
+  }
+
+  const receiverOption = receiverOptions.find((item) => item.value === target);
 
   return (
     <ModalWrapper onClick={onOverlayClick}>
@@ -25,15 +48,15 @@ const noticesConfirmModal = ({ handleClose, onSubmit, setIsConfirm }: NoticesCon
         <NoticesConfirmModalContent>
           <NoticesConfirmModalContentItem>
             <div>제목</div>
-            <div>오늘 특급 할인!</div>
+            <div>{title}</div>
           </NoticesConfirmModalContentItem>
           <NoticesConfirmModalContentItem>
             <div>대상</div>
-            <div>인증 단골</div>
+            <div>{receiverOption?.label}</div>
           </NoticesConfirmModalContentItem>
           <NoticesConfirmModalContentItem>
             <div>내용</div>
-            <div>{'마감 2시간 전이라 특급 할인 진행하고 있으니 와서 보고 가세요~!\n정말 맛있습니다.'}</div>
+            <div>{content}</div>
           </NoticesConfirmModalContentItem>
         </NoticesConfirmModalContent>
         <NoticesConfirmModalButtonSection>
@@ -47,7 +70,7 @@ const noticesConfirmModal = ({ handleClose, onSubmit, setIsConfirm }: NoticesCon
   );
 };
 
-export default noticesConfirmModal;
+export default NoticesConfirmModal;
 
 const ModalWrapper = styled.div`
   display: flex;

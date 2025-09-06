@@ -1,24 +1,47 @@
 import NoticesTab from "@components/notices/NoticesTab.tsx";
 import NoticesForm from "@components/notices/NoticesForm.tsx";
 import styled from "@emotion/styled";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import MessageHistory from "@components/notices/MessageHistory.tsx";
 import ListPageAction from "@components/common/ListPageAction.tsx";
 import { useHandleListPageNumber } from "@hooks/visit/useHandleListPageNumber.ts";
+import { useGetNotices } from "@hooks/notices/useGetNotices.ts";
 
-const PAGE_SIZE = 5;
+const PAGE_SIZE = 9;
 
 const NoticesPage = () => {
   const [currentTab, setCurrentTab] = useState<"send" | "history">("send");
-  const { currentPage, onChangePage } = useHandleListPageNumber();
+  const { currentPage, onChangePage, setCurrentPage } = useHandleListPageNumber();
+
+  const { data, isLoading, isError, refetch } = useGetNotices(currentPage, PAGE_SIZE);
+
+  // 탭 전환 시 history 들어오면 1페이지부터 다시
+  useEffect(() => {
+    if (currentTab === 'history') {
+      setCurrentPage?.(0);
+      refetch();
+    }
+  }, [currentTab, refetch, setCurrentPage]);
+  console.log(data);
   return (
     <NoticesContainer currentTab={currentTab}>
       <NoticesTab currentTab={currentTab} setCurrentTab={setCurrentTab} />
+
       {currentTab === "send" && <NoticesForm />}
+
       {currentTab === "history" && (
         <NoticesMessageHistoryWrapper>
-          <MessageHistory />
-          <ListPageAction currentPage={currentPage} onChangePage={onChangePage} pageSize={PAGE_SIZE} />
+          {isError && <div>목록을 불러오지 못했어요.</div>}
+          {!isLoading && !isError && (
+            <>
+              <MessageHistory items={data?.items ?? []} />
+              <ListPageAction
+                currentPage={currentPage}
+                totalPages={data?.totalPages ?? 0}
+                onChangePage={(page) => onChangePage(page, PAGE_SIZE)}
+              />
+            </>
+          )}
         </NoticesMessageHistoryWrapper>
       )}
     </NoticesContainer>
