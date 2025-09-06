@@ -6,6 +6,7 @@ export const colors = {
     primary400: '#ff7d76',
     primary200: '#ffc3b8',
     primary50: '#fff3ef',
+    primary20: '#FFF4EA',
   },
   grayScale: {
     gray800: '#3d3b3a',

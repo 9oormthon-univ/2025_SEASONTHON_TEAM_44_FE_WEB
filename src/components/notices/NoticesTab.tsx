@@ -30,7 +30,7 @@ interface NoticesTabItemProps {
 }
 
 const NoticesTabItem = styled.div<NoticesTabItemProps>`
-  padding: 20px 45px;
+  padding: 10px 45px;
   font: ${({ theme }) => theme.fonts.sub1};
   color: ${({ theme }) => theme.colors.black};
   cursor: pointer;

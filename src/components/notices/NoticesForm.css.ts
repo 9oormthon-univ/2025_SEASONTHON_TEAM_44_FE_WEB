@@ -26,8 +26,7 @@ const NoticesFormInput = styled.input`
   background-color: ${({ theme }) => theme.colors.grayScale.gray30};;
   border: none;
   outline: none;
-  width: 402px;
-
+  
   &::placeholder {
     color: ${({ theme }) => theme.colors.grayScale.gray200};
   }
@@ -62,16 +61,16 @@ const NoticesFormTextArea = styled.textarea`
 `;
 
 const NoticesFormButton = styled.div`
-  margin-left: auto;
   margin-top: 20px;
   margin-bottom: 20px;
-  padding: 17px 146px;
+  padding: 17px 71px;
   border-radius: 12px;
   background-color: ${({ theme }) => theme.colors.primary.primary500};
   color: ${({ theme }) => theme.colors.white};
   font: ${({ theme }) => theme.fonts.button1};
   border: none;
   cursor: pointer;
+  text-align: center;
 
   @media (max-width: 968px) {
     width: 100%;

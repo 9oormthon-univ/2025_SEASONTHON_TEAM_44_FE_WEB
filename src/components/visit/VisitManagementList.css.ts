@@ -6,7 +6,11 @@ const VisitManagementListContainer = styled.div`
   border-radius: 20px;
   border: 2px solid ${({ theme }) => theme.colors.grayScale.gray50};
   height: 515px;
-  width: 1030px;
+  width: 100%;
+  min-width: 0;
+  flex: 1 1 auto;          /* 부모가 flex면 필요 */
+  align-self: stretch;     /* 부모가 flex면 필요 */
+  box-sizing: border-box;  /* 테두리 포함 */
 `;
 
 const VisitManagementLabelSection = styled.div`
@@ -21,7 +25,7 @@ const VisitManagementLabelSection = styled.div`
 `;
 
 const VisitManagementLabel = styled.div`
-  width: 200px;
+  width: 100%;
   text-align: center;
   font: ${({ theme }) => theme.fonts.sub1};
   color: ${({ theme }) => theme.colors.black};
@@ -43,7 +47,8 @@ const VisitManagementListItem = styled.div`
   cursor: pointer;
   
   div {
-    width: 200px;
+    width: 100%;
+    white-space: nowrap;
     text-align: center;
   }
 `;

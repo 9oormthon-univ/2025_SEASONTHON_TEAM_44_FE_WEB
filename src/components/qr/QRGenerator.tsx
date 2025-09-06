@@ -1,5 +1,6 @@
 import * as S from "@components/qr/QRGenerator.css.ts";
 import { useGetGenerateQR } from "@hooks/qr/useGetGenerateQR.ts";
+import PosterDownloader from "@components/qr/PosterDownloader.tsx";
 
 interface QRGeneratorProps {
   id: number | undefined;
@@ -21,7 +22,9 @@ const QRGenerator = ({ id }: QRGeneratorProps) => {
       <S.QRGeneratorPrimaryText>방문 적립, 단골 등록, 쿠폰 발급까지 한 번에!</S.QRGeneratorPrimaryText>
       <S.QRGeneratorDescription>{"매장 QR만 있으면 새로운 손님도 단골로,\n단골 손님은 더 자주 찾는 매장이 됩니다"}</S.QRGeneratorDescription>
       {qrImg && <img src={qrImg} alt="매장 QR" style={{ width: "280px", height: "280px" }} />}
-      <S.QRGeneratorButton onClick={generateQR}>QR 생성하기 →</S.QRGeneratorButton>
+      {!qrImg && <S.QRGeneratorButton onClick={generateQR}>QR 생성하기 →</S.QRGeneratorButton>}
+      {qrImg && (<PosterDownloader qrUrl={qrImg} />
+      )}
     </S.QRGeneratorContainer>
   );
 };
