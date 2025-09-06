@@ -1,20 +1,21 @@
 import IcLogo from "@icon/ic-logo.svg";
 import ImgLoginMain from "@img/img-login-main.png";
 import styled from "@emotion/styled";
-import { useAuthStore } from "@stores/useAuthStore.ts";
-import { useNavigate } from "react-router";
-
-const accessToken = "eyJhbGciOiJIUzUxMiJ9.eyJ0b2tlblR5cGUiOiJhY2Nlc3NUb2tlbiIsInN1YiI6IjIiLCJpYXQiOjE3NTcxNTg4MjksImV4cCI6MTc1OTc1MDgyOX0.GTMBxl8H7NygnZ0lhNKPKmGoukH270ts2PqfXFbf92T6LZ_8NgcaIXtOUBdn4BjIrJdWokW3ZpK1qW874BpF9Q";
-const refreshToken = "eyJhbGciOiJIUzUxMiJ9.eyJ0b2tlblR5cGUiOiJyZWZyZXNoVG9rZW4iLCJzdWIiOiIyIiwiaWF0IjoxNzU3MTU1ODM2LCJleHAiOjE3NTc3NjA2MzZ9.WByFvVUZLfiLafU8ZTq-r7bnpYoozEiH1XhL6dLXxFei433H6IU4E2LCUBC7HGgzH6DMFG66GFfCZdeMRiVUtw";
 
 const LoginBox = () => {
-  const { login } = useAuthStore();
-  const navigate = useNavigate();
+
   const handleKakaoLogin = () => {
+    window.location.href = `https://kauth.kakao.com/oauth/authorize?response_type=code&client_id=${
+      import.meta.env.VITE_KAKAO_ID
+    }&redirect_uri=${encodeURIComponent(window.location.origin + '/login')}`;
+    /*login({ accessToken, refreshToken });*/
+
+  };
+  /*const handleKakaoLogin = () => {
     window.location.href = `https://kauth.kakao.com/oauth/authorize?response_type=code&client_id=${import.meta.env.VITE_KAKAO_ID}&redirect_uri=${import.meta.env.VITE_API_URL}/callback`;
     login({ accessToken, refreshToken });
     navigate("/sign-up");
-  };
+  };*/
   return (
     <LoginBoxContainer>
       <LoginBoxInner>
