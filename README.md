@@ -1,69 +1,49 @@
-# React + TypeScript + Vite
+# 📌 Dasion - 사장님 웹
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+> 사장님만을 위한 단골 관리 솔루션 사장님 웹 페이지
+---
 
-Currently, two official plugins are available:
+## 배포 주소
+https://ceo-dasion.vercel.app/
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
 
-## Expanding the ESLint configuration
+## 🚀 주요 기능
+- ⚡️ **Vite** 기반 빠른 개발 환경
+- 🎨 **Emotion**으로 스타일링 (CSS-in-JS)
+- 🗂 **Zustand** 상태 관리
+- 🔄 **TanStack Query**로 서버 상태 관리 및 캐싱
+- 📝 **React Hook Form + Zod**로 타입 안전한 폼 관리
+- 📊 **Recharts**로 데이터 시각화
+- 📷 **html2canvas + jsPDF**로 화면 캡처 및 PDF 생성
+- 🌐 **React Router v7**로 라우팅 처리
 
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
+---
 
-```js
-export default tseslint.config([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
+## 🛠 기술 스택
 
-      // Remove tseslint.configs.recommended and replace with this
-      ...tseslint.configs.recommendedTypeChecked,
-      // Alternatively, use this for stricter rules
-      ...tseslint.configs.strictTypeChecked,
-      // Optionally, add this for stylistic rules
-      ...tseslint.configs.stylisticTypeChecked,
+| 구분 | 사용 기술 |
+|------|-----------|
+| Frontend Framework | [React 19](https://react.dev/) |
+| Build Tool | [Vite 7](https://vitejs.dev/) |
+| Styling | [Emotion](https://emotion.sh/docs/introduction) |
+| State Management | [Zustand](https://zustand-demo.pmnd.rs/), [TanStack Query](https://tanstack.com/query/latest) |
+| Form | [React Hook Form](https://react-hook-form.com/), [Zod](https://zod.dev/) |
+| Network | [Axios](https://axios-http.com/) |
+| Visualization | [Recharts](https://recharts.org/en-US/) |
+| 기타 | html2canvas, jsPDF |
 
-      // Other configs...
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
+---
+
+
+---
+
+## ⚙️ 설치 및 실행
+
+```bash
+# 패키지 설치
+npm install
+
+# 개발 서버 실행
+npm run dev
 ```
 
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
-
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
-
-export default tseslint.config([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-      // Enable lint rules for React
-      reactX.configs['recommended-typescript'],
-      // Enable lint rules for React DOM
-      reactDom.configs.recommended,
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
-```
