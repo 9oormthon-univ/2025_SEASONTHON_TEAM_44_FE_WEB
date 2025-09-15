@@ -9,10 +9,10 @@ const NoticesTab = ({ currentTab, setCurrentTab }: NoticesTabProps) => {
   return (
     <NoticesTabContainer>
       <NoticesTabItem isActive={currentTab === "send"} onClick={() => setCurrentTab("send")}>
-        메세지 보내기
+        공지 보내기
       </NoticesTabItem>
       <NoticesTabItem isActive={currentTab === "history"} onClick={() => setCurrentTab("history")}>
-        이전 메세지
+        이전 공지
       </NoticesTabItem>
     </NoticesTabContainer>
   );
