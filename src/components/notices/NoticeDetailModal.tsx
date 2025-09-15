@@ -1,6 +1,7 @@
 import type { NoticeItem } from "@apis/notice.ts";
 import styled from "@emotion/styled";
 import { receiverType } from "@/types/notices.ts";
+import { fmt } from "@utils/date.ts";
 
 interface NoticeDetailModalProps {
   onClose: () => void;
@@ -18,7 +19,7 @@ const NoticeDetailModal = ({ noticeItem, onClose }: NoticeDetailModalProps) => {
         <NoticesConfirmModalContent>
           <NoticesConfirmModalContentItem>
             <div>발송 일시</div>
-            <div>{noticeItem.createdAt}</div>
+            <div>{fmt(noticeItem.createdAt)}</div>
           </NoticesConfirmModalContentItem>
           <NoticesConfirmModalContentItem>
             <div>제목</div>

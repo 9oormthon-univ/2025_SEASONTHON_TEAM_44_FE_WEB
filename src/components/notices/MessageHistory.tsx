@@ -3,12 +3,11 @@ import type { NoticeItem } from "@apis/notice.ts";
 import { receiverType } from "@/types/notices.ts";
 import { useState } from "react";
 import NoticeDetailModal from "@components/notices/NoticeDetailModal.tsx";
+import { fmt } from "@utils/date.ts";
 
 interface MessageHistoryProps {
   items: NoticeItem[];
 }
-
-const fmt = (iso: string) => new Date(iso).toLocaleString(); // 필요시 커스텀 포맷
 
 const MessageHistory = ({ items }: MessageHistoryProps) => {
   const [isOpen, setIsOpen] = useState(false);
