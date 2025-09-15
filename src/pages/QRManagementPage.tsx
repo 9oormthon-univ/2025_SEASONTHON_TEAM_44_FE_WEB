@@ -6,10 +6,8 @@ import { useGetStoreInfo } from "@hooks/store/useGetStoreInfo.ts";
 const QRManagementPage = () => {
   const { data, isSuccess, isPending } = useGetStoreInfo();
 
-  if (!isSuccess && isPending) return null;
-
-  const storeId = data?.id; // <- 두 번 옵셔널 체이닝
-  console.log(storeId);
+  if (!isSuccess && isPending && !data) return null;
+  const storeId = data?.response.id; // <- 두 번 옵셔널 체이닝
 
   return (
     <QRGeneratorContainer>

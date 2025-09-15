@@ -10,8 +10,8 @@ const MyInfoPage = () => {
 
   return (
     <MyInfoContainer>
-      <MyInfoHeader address={data?.address} />
-      <MyStoreInfo response={data} />
+      <MyInfoHeader address={data?.response.address} />
+      <MyStoreInfo response={data?.response} />
     </MyInfoContainer>
   );
 };

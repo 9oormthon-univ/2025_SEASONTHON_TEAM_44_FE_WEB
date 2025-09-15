@@ -11,7 +11,7 @@ const PAGE_SIZE = 9;
 const VisitManagement = () => {
   const { inputText, onChangeInputText } = useHandleSearchBar();
   const { currentPage, onChangePage } = useHandleListPageNumber();
-  const { data } = useGetVisits(currentPage - 1, PAGE_SIZE);
+  const { data } = useGetVisits(currentPage, PAGE_SIZE);
 
   return (
     <VisitManagementContainer>
