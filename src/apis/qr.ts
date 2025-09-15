@@ -8,7 +8,7 @@ export interface QrCodeResponse {
 export const generateQrCode = async (url: string) => {
   try {
     const qrURL = "https://dasion-frontend.vercel.app/main" + `/${url}`
-    const response = await axiosInstance.get<BaseResponse<QrCodeResponse>>("/owner/qr", {
+    const response = await axiosInstance.get<BaseResponse<QrCodeResponse>>("/qrcode", {
       params: { url: qrURL },
     });
 

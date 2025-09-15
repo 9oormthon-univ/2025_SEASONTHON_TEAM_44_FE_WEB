@@ -31,7 +31,7 @@ export interface VisitListItem {
 }
 
 export const getVisits = async (page: number, size: number) => {
-  const res = await axiosInstance.get<BaseResponse<VisitResponse>>("/owner/stamp/logs", {
+  const res = await axiosInstance.get<BaseResponse<VisitResponse>>("/stamps/logs", {
     params: { page, size },
   });
   return res.data;

@@ -1,88 +1,12 @@
 import * as S from "@components/visit/VisitManagementList.css.ts";
 import type { VisitItem } from "@apis/visit.ts";
 import { VisitManagementNoneList } from "@components/visit/VisitManagementList.css.ts";
-
-/*const visitList = [
-  {
-    id: 0,
-    visitDate: "2023-08-01 14:30",
-    name: "홍길동",
-    type: "신규 등록",
-    count: 1,
-    etc: "신규 단골 등록",
-  },
-  {
-    id: 1,
-    visitDate: "2023-08-01 14:30",
-    name: "홍길동",
-    type: "신규 등록",
-    count: 1,
-    etc: "신규 단골 등록",
-  },
-  {
-    id: 0,
-    visitDate: "2023-08-01 14:30",
-    name: "홍길동",
-    type: "신규 등록",
-    count: 1,
-    etc: "신규 단골 등록",
-  },
-  {
-    id: 1,
-    visitDate: "2023-08-01 14:30",
-    name: "홍길동",
-    type: "신규 등록",
-    count: 1,
-    etc: "신규 단골 등록",
-  },
-  {
-    id: 0,
-    visitDate: "2023-08-01 14:30",
-    name: "홍길동",
-    type: "신규 등록",
-    count: 1,
-    etc: "신규 단골 등록",
-  },
-  {
-    id: 1,
-    visitDate: "2023-08-01 14:30",
-    name: "홍길동",
-    type: "신규 등록",
-    count: 1,
-    etc: "신규 단골 등록",
-  },
-  {
-    id: 0,
-    visitDate: "2023-08-01 14:30",
-    name: "홍길동",
-    type: "신규 등록",
-    count: 1,
-    etc: "신규 단골 등록",
-  },
-  {
-    id: 1,
-    visitDate: "2023-08-01 14:30",
-    name: "홍길동",
-    type: "신규 등록",
-    count: 1,
-    etc: "신규 단골 등록",
-  },
-  {
-    id: 0,
-    visitDate: "2023-08-01 14:30",
-    name: "홍길동",
-    type: "신규 등록",
-    count: 1,
-    etc: "신규 단골 등록",
-  },
-];*/
+import { fmt } from "@utils/date.ts";
 
 interface VisitManagementListProps {
   items: VisitItem[];
   isFetching?: boolean;
 }
-
-const fmt = (iso: string) => new Date(iso).toLocaleString();
 
 const VisitManagementList = ({ items }: VisitManagementListProps) => {
   return (

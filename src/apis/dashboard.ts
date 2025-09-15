@@ -25,7 +25,7 @@ export interface DashboardResponse {
 
 export const getDashboard = async () => {
   try {
-    const response = await axiosInstance.get<BaseResponse<DashboardResponse>>("/owner/dashboard");
+    const response = await axiosInstance.get<BaseResponse<DashboardResponse>>("/stores/me/summary");
     return response.data;
   } catch ( error ) {
     console.error(error);
