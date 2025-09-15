@@ -77,12 +77,6 @@ export const router = createBrowserRouter([
   },
   {
     'path': '/sign-up',
-    element: <RootLayout />,
-    children: [
-      {
-        index: true,
-        element: <SignUpPage />,
-      }
-    ]
+    element:< SignUpPage />,
   },
 ]);

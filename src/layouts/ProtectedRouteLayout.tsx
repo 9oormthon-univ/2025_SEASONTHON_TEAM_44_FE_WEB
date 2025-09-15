@@ -11,9 +11,9 @@ const ProtectedRouteLayout = () => {
   })
 
   if (isSuccess && data) {
-    if (isLoggedIn && data?.response) {
+    if (isLoggedIn && data.response === true) {
       return <Navigate to="/dashboard" replace />;
-    } else if (isLoggedIn && !data.response) {
+    } else if (isLoggedIn && data.response === false) {
       return <Navigate to="/sign-up" replace />;
     }
   }
