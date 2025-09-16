@@ -1,4 +1,4 @@
-import { axiosInstance } from './axiosInstance';
+import { axiosInstanceChatbot } from './axiosInstance';
 import { z } from 'zod';
 
 export const chatRequestSchema = z.object({
@@ -20,6 +20,6 @@ export type ChatRequestType = z.infer<typeof chatRequestSchema>;
 export type ChatResponseType = z.infer<typeof chatResponseSchema>;
 
 export const postChat = async (request: ChatRequestType) => {
-  const response = await axiosInstance.post('/chat', request);
+  const response = await axiosInstanceChatbot.post('/chat', request);
   return chatResponseSchema.parse(response.data);
 };
