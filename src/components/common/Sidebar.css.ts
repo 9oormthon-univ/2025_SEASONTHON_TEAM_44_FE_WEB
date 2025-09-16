@@ -6,6 +6,7 @@ interface ActiveProps {
 
 const SideBarContainer = styled.div`
   min-width: 160px;
+  height: 100vh;
   display: flex;
   flex-direction: column;
   border-bottom-right-radius: 20px;
