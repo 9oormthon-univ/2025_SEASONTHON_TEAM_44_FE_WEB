@@ -6,39 +6,18 @@ import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useImageUpload } from "@hooks/signup/useImageUpload.ts";
 import { type SignUpRequest, usePostSignUp } from "@hooks/signup/usePostSignUp.ts";
+import * as React from "react";
 
-function toHHmmNumber(s: string): number | null {
-  // 허용 포맷: "9", "09", "9:5", "09:05", "0905"
-  const trimmed = s.trim();
+// 입력값을 "HH:MM"으로 변환하는 함수
+const formatTimeInput = (value: string): string => {
+  const digits = value.replace(/\D/g, '');
 
-  // "0905" 같은 숫자붙은 포맷
-  if (/^\d{3,4}$/.test(trimmed)) {
-    const hh = trimmed.length === 3 ? Number(trimmed.slice(0, 1)) : Number(trimmed.slice(0, 2));
-    const mm = trimmed.length === 3 ? Number(trimmed.slice(1)) : Number(trimmed.slice(2));
-    if (hh >= 0 && hh <= 23 && mm >= 0 && mm <= 59) return hh * 100 + mm;
-    return null;
+  if (digits.length <= 2) {
+    return digits;
   }
 
-  // "HH", "H", "HH:MM", "H:MM"
-  const m = trimmed.match(/^(\d{1,2})(?::(\d{1,2}))?$/);
-  if (!m) return null;
-  const hh = Number(m[1]);
-  const mm = m[2] !== undefined ? Number(m[2]) : 0;
-  if (hh >= 0 && hh <= 23 && mm >= 0 && mm <= 59) return hh * 100 + mm;
-  return null;
-}
-
-function parseBusinessHours(input: string): { open: number; close: number } | null {
-  // 구분자: ~, -, ~ 주변 공백 허용
-  const parts = input.split(/\s*[~-]\s*/);
-  if (parts.length !== 2) return null;
-
-  const openNum = toHHmmNumber(parts[0]);
-  const closeNum = toHHmmNumber(parts[1]);
-  if (openNum == null || closeNum == null) return null;
-
-  return { open: openNum, close: closeNum };
-}
+  return `${digits.slice(0, 2)}:${digits.slice(2, 4)}`;
+};
 
 const scheme = z.object({
   name: z.string().min(1, "가게 이름을 입력해주세요"),
@@ -47,8 +26,9 @@ const scheme = z.object({
   phone: z.string().min(1, "가게 연락처를 입력해주세요"),
   address: z.string().min(1, "가게 주소를 입력해주세요"),
   detailAddress: z.string().min(1, "가게 상세 주소를 입력해주세요"),
-  open: z.number().min(1, "가게 운영시간을 입력해주세요"),
-  close: z.number().min(1, "가게 운영시간을 입력해주세요"),
+  open: z.string().min(1, "가게 운영시간을 입력해주세요"),
+  close: z.string().min(1, "가게 운영시간을 입력해주세요"),
+  menuImageKeys: z.array(z.string()).min(0),
 });
 
 export type SignUpFormType = z.infer<typeof scheme>;
@@ -56,8 +36,15 @@ export type SignUpFormType = z.infer<typeof scheme>;
 const SignUpForm = () => {
   const [coverPreview, setCoverPreview] = useState<string | null>(null);
   const coverInputId = useId();
-  const { register, setValue, getValues, setError, clearErrors } = useForm<SignUpFormType>({
+
+  const [menuPreviews, setMenuPreviews] = useState<string[]>([]);
+  const menuInputId = useId(); // 메뉴 업로드 input을 위한 고유 id
+
+  const { register, setValue, getValues } = useForm<SignUpFormType>({
     resolver: zodResolver(scheme),
+    defaultValues: {
+      menuImageKeys: [],
+    },
   });
   const { mutate: signUp } = usePostSignUp();
 
@@ -81,12 +68,52 @@ const SignUpForm = () => {
     }
   };
 
+  const handleMenuImagesChange = async (e: React.ChangeEvent<HTMLInputElement>) => {
+    const files = e.target.files;
+    if (!files || files.length === 0) return;
+
+    // 여러 파일을 동시에 업로드하기 위해 Promise.all 사용
+    const uploadPromises = Array.from(files).map(file => uploadImage(file));
+
+    try {
+      const results = await Promise.all(uploadPromises); // [{key: '...'}, {key: '...'}]
+      const newKeys = results.map(r => r.key);
+      const newPreviews = Array.from(files).map(file => URL.createObjectURL(file));
+
+      // 기존 값에 새로 업로드된 값들을 추가
+      const currentKeys = getValues("menuImageKeys") || [];
+      setValue("menuImageKeys", [...currentKeys, ...newKeys], { shouldValidate: true });
+      setMenuPreviews(prev => [...prev, ...newPreviews]);
+
+    } catch ( err ) {
+      console.error("메뉴 이미지 업로드 실패:", err);
+      // 사용자에게 에러 알림 UI를 보여주는 것이 좋습니다.
+    }
+  };
+
+  /*const handleRemoveMenuImage = (indexToRemove: number) => {
+    // 1. 미리보기 URL 메모리 해제
+    URL.revokeObjectURL(menuPreviews[indexToRemove]);
+
+    // 2. 미리보기 상태에서 해당 인덱스 제거
+    setMenuPreviews(prev => prev.filter((_, index) => index !== indexToRemove));
+
+    // 3. react-hook-form 상태에서 해당 키 제거
+    const currentKeys = getValues("menuImageKeys") || [];
+    setValue(
+      "menuImageKeys",
+      currentKeys.filter((_, index) => index !== indexToRemove),
+      { shouldValidate: true },
+    );
+  };*/
+
   useEffect(() => {
-    // objectURL 메모리 릴리즈
+    // 컴포넌트가 언마운트될 때 생성된 모든 Object URL을 해제
     return () => {
       if (coverPreview) URL.revokeObjectURL(coverPreview);
+      menuPreviews.forEach(url => URL.revokeObjectURL(url));
     };
-  }, [coverPreview]);
+  }, [coverPreview, menuPreviews]);
 
   /* 운영 시간 함수 */
 
@@ -96,25 +123,6 @@ const SignUpForm = () => {
     register("close", { valueAsNumber: true });
   }, [register]);
 
-  const [businessHourText, setBusinessHourText] = useState("");
-
-  const handleBusinessHourChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const v = e.target.value;
-    setBusinessHourText(v);
-
-    const parsed = parseBusinessHours(v);
-    if (parsed) {
-      setValue("open", parsed.open, { shouldValidate: true, shouldDirty: true });
-      setValue("close", parsed.close, { shouldValidate: true, shouldDirty: true });
-      clearErrors(["open", "close"]);
-    } else {
-      // 잘못된 입력일 때는 값 비우고 에러 표시 (제출 시 막힘)
-      setValue("open", undefined as unknown as number, { shouldValidate: true });
-      setValue("close", undefined as unknown as number, { shouldValidate: true });
-      setError("open", { type: "manual", message: "운영시간 형식을 확인해주세요 (예: 09:00~23:00)" });
-      setError("close", { type: "manual", message: "운영시간 형식을 확인해주세요 (예: 09:00~23:00)" });
-    }
-  };
 
   const handleSubmit = (data: SignUpFormType) => {
     const signUpRequest: SignUpRequest = {
@@ -124,11 +132,17 @@ const SignUpForm = () => {
       phone: data.phone,
       address: data.address,
       detailAddress: "",
-      open: data.open,
-      close: data.close,
+      open: parseInt(data.open.replace(":", ""), 10),
+      close: parseInt(data.close.replace(":", ""), 10),
+      menuImageKeys: data.menuImageKeys,
     };
     signUp(signUpRequest);
   };
+
+  const openRegister = register("open");
+  const closeRegister = register("close");
+
+  console.log(getValues());
 
   return (
     <SignUpFormContainer>
@@ -173,8 +187,51 @@ const SignUpForm = () => {
       </SignUpFormInputWrapper>
       <SignUpFormInputWrapper>
         <SignUpFormInputLabel>운영시간</SignUpFormInputLabel>
-        <SignUpFormInput type="text" placeholder="ex) 09:00~23:00" value={businessHourText}
-                         onChange={handleBusinessHourChange} />
+        <SignUpFormInputRow>
+          <SignUpFormInputTime
+            type="text"
+            placeholder="00:00"
+            maxLength={5}
+            {...openRegister}
+            onChange={(e) => {
+              e.target.value = formatTimeInput(e.target.value);
+              openRegister.onChange(e);
+            }} />
+          <div>~</div>
+          <SignUpFormInputTime
+            type="text"
+            placeholder="23:59"
+            maxLength={5}
+            {...closeRegister}
+            onChange={(e) => {
+              e.target.value = formatTimeInput(e.target.value);
+              closeRegister.onChange(e);
+            }}
+          />
+        </SignUpFormInputRow>
+      </SignUpFormInputWrapper>
+      {/* 메뉴판 업로드 영역 */}
+      <SignUpFormInputWrapper>
+        <SignUpFormInputLabel htmlFor={menuInputId}>포토 메뉴판</SignUpFormInputLabel>
+        <SignUpFormImageInputDescription>이미지 크기: 362px X 190px</SignUpFormImageInputDescription>
+        <ImageDropLabel htmlFor={menuInputId} $w={362} $h={190}>
+          {menuPreviews.length > 0 ? (
+            <PreviewImg src={menuPreviews[menuPreviews.length - 1]} alt="대표 사진 미리보기" />
+          ) : (
+            <Center>
+              <img src={IcAddPhoto} alt="" aria-hidden />
+              <CenterText>{isPending ? "업로드 중..." : "사진 추가하기"}</CenterText>
+            </Center>
+          )}
+        </ImageDropLabel>
+
+        <HiddenFileInput
+          id={menuInputId} // 고유 ID 사용
+          type="file"
+          accept="image/*"
+          multiple
+          onChange={handleMenuImagesChange}
+        />
       </SignUpFormInputWrapper>
       <SignUpFormButton onClick={() => handleSubmit(getValues())} type="button">완료</SignUpFormButton>
     </SignUpFormContainer>
@@ -212,6 +269,20 @@ const SignUpFormInputWrapper = styled.div`
   gap: 5px;
 `;
 
+const SignUpFormInputRow = styled.div`
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  gap: 40px;
+  padding: 0 50px;
+
+  div {
+    font: ${({ theme }) => theme.fonts.body1};
+    color: ${({ theme }) => theme.colors.black};
+  }
+`;
+
 const SignUpFormInputLabel = styled.label`
   font: ${({ theme }) => theme.fonts.body1};
   color: ${({ theme }) => theme.colors.black};
@@ -244,19 +315,39 @@ const SignUpFormInput = styled.input`
   transition: box-shadow 0.15s ease, background 0.15s ease;
 `;
 
+const SignUpFormInputTime = styled.input`
+  padding: 20px;
+  width: 85px;
+  font: ${({ theme }) => theme.fonts.body1};
+  color: ${({ theme }) => theme.colors.black};
+  border-radius: 12px;
+  text-align: center;
+  border: none;
+  outline: none;
+  background-color: ${({ theme }) => theme.colors.grayScale.gray30};
+
+  &::placeholder {
+    color: ${({ theme }) => theme.colors.grayScale.gray200};
+  }
+
+  &:hover {
+    box-shadow: inset 0 0 0 1px rgba(0, 0, 0, 0.12);
+    outline: none;
+  }
+
+  &:focus-visible {
+    outline: none;
+    border: none;
+    box-shadow: inset 0 0 0 1px rgba(0, 0, 0, 0.12);
+  }
+
+  transition: box-shadow 0.15s ease, background 0.15s ease;
+`;
+
 const SignUpFormImageInputDescription = styled.div`
   font: ${({ theme }) => theme.fonts.body1};
   color: ${({ theme }) => theme.colors.grayScale.gray400};
 `;
-
-/*const SignUpSearchButton = styled.button`
-  width: fit-content;
-  padding: 10px 41px;
-  font: ${({ theme }) => theme.fonts.body1};
-  color: ${({ theme }) => theme.colors.white};
-  border-radius: 6px;
-  background-color: ${({ theme }) => theme.colors.grayScale.gray400};
-`;*/
 
 const ImageDropLabel = styled.label<{ $w?: number; $h?: number }>`
   position: relative;

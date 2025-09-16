@@ -19,7 +19,7 @@ const Header = () => {
     <HeaderContainer>
       <img src={IcLogo} alt="" onClick={handleLogout}/>
       <HeaderProfileSection>
-        <img  src={data.response.profileImage ? data.response.profileImage : ImgProfileDefault}/>
+        <img  src={data.response.profileImage ? data.response.profileImage : ImgProfileDefault} alt=""/>
         <div>{data.response.name}님</div>
       </HeaderProfileSection>
     </HeaderContainer>

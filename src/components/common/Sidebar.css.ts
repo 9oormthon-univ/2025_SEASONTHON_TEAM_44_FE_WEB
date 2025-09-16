@@ -6,6 +6,7 @@ interface ActiveProps {
 
 const SideBarContainer = styled.div`
   min-width: 160px;
+  height: 100vh;
   display: flex;
   flex-direction: column;
   border-bottom-right-radius: 20px;
@@ -15,11 +16,22 @@ const SideBarContainer = styled.div`
 `;
 
 const SideBarMenuItem = styled.div<ActiveProps>`
-  padding: 15px 20px;
+  margin: 5px 10px;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 5px;
+  padding: 5px;
   text-align: start;
-  font: ${({ theme }) => theme.fonts.body1};
+  font: ${({ theme }) => theme.fonts.body3};
   cursor: pointer;
-  background-color: ${({ isActive, theme }) => isActive ? theme.colors.primary.primary200 : 'transparent'};
+  background-color: ${({ isActive, theme }) => isActive ? theme.colors.primary.primary50 : 'transparent'};
+  border-radius: 6px;
+  color: ${({ isActive, theme }) => isActive ? theme.colors.primary.primary500 : theme.colors.grayScale.gray500};
+  
+  &:hover {
+    background-color: ${({ theme }) => theme.colors.primary.primary50};
+  }
 `;
 
 export { SideBarContainer, SideBarMenuItem };

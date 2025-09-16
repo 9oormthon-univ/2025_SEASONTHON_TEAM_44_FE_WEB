@@ -51,7 +51,7 @@ export const getNotices = async (page: number, size: number): Promise<NoticeResp
     return payload;
   } catch (error) {
     console.error(error);
-    throw error; // ❌ return undefined 대신 반드시 throw
+    throw error;
   }
 };
 

@@ -11,6 +11,7 @@ export interface SignUpRequest {
   detailAddress: string;
   open: number;
   close: number;
+  menuImageKeys: string[];
 }
 
 export const signUp = async (request: SignUpRequest) => {
