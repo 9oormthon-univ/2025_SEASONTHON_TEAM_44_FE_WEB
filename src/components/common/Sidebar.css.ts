@@ -27,7 +27,7 @@ const SideBarMenuItem = styled.div<ActiveProps>`
   cursor: pointer;
   background-color: ${({ isActive, theme }) => isActive ? theme.colors.primary.primary50 : 'transparent'};
   border-radius: 6px;
-  color: ${({ isActive, theme }) => isActive ? theme.colors.primary.primary500 : theme.colors.grayScale.gray800};
+  color: ${({ isActive, theme }) => isActive ? theme.colors.primary.primary500 : theme.colors.grayScale.gray500};
   
   &:hover {
     background-color: ${({ theme }) => theme.colors.primary.primary50};
