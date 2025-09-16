@@ -76,7 +76,7 @@ const NoticesConfirmModalContainer = styled.div`
 const NoticesConfirmModalContent = styled.div`
   display: flex;
   flex-direction: column;
-  gap: 30px;
+  gap: 34px;
   padding: 20px;
   background-color: ${({ theme }) => theme.colors.grayScale.gray30};
   border-radius: 20px;
@@ -85,9 +85,10 @@ const NoticesConfirmModalContent = styled.div`
 const NoticesConfirmModalContentItem = styled.div`
   display: flex;
   flex-direction: row;
-  gap: 20px;
+  gap: 22px;
 
   div:first-of-type {
+    min-width: 58px;
     width: fit-content;
     text-align: left;
     font: ${({ theme }) => theme.fonts.body1};
@@ -108,7 +109,6 @@ const NoticesConfirmModalButtonSection = styled.div`
   flex-direction: column;
   align-items: center;
   gap: 10px;
-  padding: 0 15%;
   width: 100%;
 `;
 
