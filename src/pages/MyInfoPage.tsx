@@ -20,6 +20,7 @@ export default MyInfoPage;
 
 const MyInfoContainer = styled.div`
   width: 100%;
+  min-width: 600px;
   padding: 60px 105px 116px 105px;
   background-color: ${({ theme }) => theme.colors.white};
   border-radius: 20px;
