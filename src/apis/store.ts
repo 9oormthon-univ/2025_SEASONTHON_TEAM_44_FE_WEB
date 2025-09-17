@@ -4,13 +4,14 @@ import type { BaseResponse } from "@/types/baseResponse.ts";
 export interface StoreInfoResponse {
   id: number;
   name: string;
-  imageUrl: string;
+  storeImageUrl: string;
   introduction: string;
   phone: string;
   address: string;
   detailAddress: string;
   open: number;
   close: number;
+  menuImageUrls: string[]
 }
 
 export const getStoreInfo = async () => {
