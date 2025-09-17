@@ -4,11 +4,14 @@ import TodaySummaryCard from "@components/dashboard/TodaySummaryCard.tsx";
 import TotalQRScans from "@components/dashboard/TotalQRScans.tsx";
 import styled from "@emotion/styled";
 import { useGetDashboard } from "@hooks/dashboard/useGetDashboard.ts";
+import Loading from "@components/common/Loading.tsx";
 
 const DashboardPage = () => {
   const { data, isPending, isSuccess } = useGetDashboard();
 
-  if (!isSuccess && isPending) return null;
+  if (!isSuccess && isPending) {
+    return <Loading />
+  }
   const { totalVisits, notiResponse, regionRatios, todaySummary } = data?.response ?? {};
 
   return (

@@ -4,7 +4,6 @@ import IcTutorialThird from "@icon/ic-tutorial-third.svg"
 import IcTutorialFourth from "@icon/ic-tutorial-fourth.svg"
 import * as S from "@components/qr/QRCodeTutorial.css.ts";
 
-
 const qrCodeTutorial = [
   {
     id: 1,
@@ -39,6 +38,7 @@ const QRCodeTutorial = () => {
       <S.QRCodeTutorialSection>
         {qrCodeTutorial.map((item) => (
           <S.QRCodeTutorialItem key={item.id}>
+            {/*<Player src={item.lottie} loop autoplay />*/}
             <S.QRCodeTutorialItemImage src={item.icon} alt=""/>
             <S.QRCodeTutorialItemInner>
               <S.QRCodeTutorialItemTitle>{item.title}</S.QRCodeTutorialItemTitle>
