@@ -1,12 +1,15 @@
-import styled from "@emotion/styled";
-import { useEffect, useId, useState } from "react";
-import IcAddPhoto from "@icon/ic-add-photo.svg";
-import { z } from "zod";
-import { useForm } from "react-hook-form";
-import { zodResolver } from "@hookform/resolvers/zod";
-import { useImageUpload } from "@hooks/signup/useImageUpload.ts";
-import { type SignUpRequest, usePostSignUp } from "@hooks/signup/usePostSignUp.ts";
-import * as React from "react";
+import styled from '@emotion/styled';
+import { useEffect, useId, useState } from 'react';
+import IcAddPhoto from '@icon/ic-add-photo.svg';
+import { z } from 'zod';
+import { useForm } from 'react-hook-form';
+import { zodResolver } from '@hookform/resolvers/zod';
+import { useImageUpload } from '@hooks/signup/useImageUpload.ts';
+import {
+  type SignUpRequest,
+  usePostSignUp,
+} from '@hooks/signup/usePostSignUp.ts';
+import * as React from 'react';
 
 // 입력값을 "HH:MM"으로 변환하는 함수
 const formatTimeInput = (value: string): string => {
@@ -20,14 +23,14 @@ const formatTimeInput = (value: string): string => {
 };
 
 const scheme = z.object({
-  name: z.string().min(1, "가게 이름을 입력해주세요"),
-  imageKey: z.string().min(1, "가게 대표 사진을 등록해주세요"),
+  name: z.string().min(1, '가게 이름을 입력해주세요'),
+  imageKey: z.string().min(1, '가게 대표 사진을 등록해주세요'),
   introduction: z.string().min(1),
-  phone: z.string().min(1, "가게 연락처를 입력해주세요"),
-  address: z.string().min(1, "가게 주소를 입력해주세요"),
-  detailAddress: z.string().min(1, "가게 상세 주소를 입력해주세요"),
-  open: z.string().min(1, "가게 운영시간을 입력해주세요"),
-  close: z.string().min(1, "가게 운영시간을 입력해주세요"),
+  phone: z.string().min(1, '가게 연락처를 입력해주세요'),
+  address: z.string().min(1, '가게 주소를 입력해주세요'),
+  detailAddress: z.string().min(1, '가게 상세 주소를 입력해주세요'),
+  open: z.string().min(1, '가게 운영시간을 입력해주세요'),
+  close: z.string().min(1, '가게 운영시간을 입력해주세요'),
   menuImageKeys: z.array(z.string()).min(0),
 });
 
@@ -61,32 +64,37 @@ const SignUpForm = () => {
     setCoverPreview(objectUrl);
 
     try {
-      const { key } = await uploadImage(file);   // <- 네트워크 두 번(presign, PUT) 뜸
-      setValue("imageKey", key, { shouldValidate: true });
-    } catch ( err ) {
+      const { key } = await uploadImage(file); // <- 네트워크 두 번(presign, PUT) 뜸
+      setValue('imageKey', key, { shouldValidate: true });
+    } catch (err) {
       console.error(err);
     }
   };
 
-  const handleMenuImagesChange = async (e: React.ChangeEvent<HTMLInputElement>) => {
+  const handleMenuImagesChange = async (
+    e: React.ChangeEvent<HTMLInputElement>,
+  ) => {
     const files = e.target.files;
     if (!files || files.length === 0) return;
 
     // 여러 파일을 동시에 업로드하기 위해 Promise.all 사용
-    const uploadPromises = Array.from(files).map(file => uploadImage(file));
+    const uploadPromises = Array.from(files).map((file) => uploadImage(file));
 
     try {
       const results = await Promise.all(uploadPromises); // [{key: '...'}, {key: '...'}]
-      const newKeys = results.map(r => r.key);
-      const newPreviews = Array.from(files).map(file => URL.createObjectURL(file));
+      const newKeys = results.map((r) => r.key);
+      const newPreviews = Array.from(files).map((file) =>
+        URL.createObjectURL(file),
+      );
 
       // 기존 값에 새로 업로드된 값들을 추가
-      const currentKeys = getValues("menuImageKeys") || [];
-      setValue("menuImageKeys", [...currentKeys, ...newKeys], { shouldValidate: true });
-      setMenuPreviews(prev => [...prev, ...newPreviews]);
-
-    } catch ( err ) {
-      console.error("메뉴 이미지 업로드 실패:", err);
+      const currentKeys = getValues('menuImageKeys') || [];
+      setValue('menuImageKeys', [...currentKeys, ...newKeys], {
+        shouldValidate: true,
+      });
+      setMenuPreviews((prev) => [...prev, ...newPreviews]);
+    } catch (err) {
+      console.error('메뉴 이미지 업로드 실패:', err);
       // 사용자에게 에러 알림 UI를 보여주는 것이 좋습니다.
     }
   };
@@ -111,7 +119,7 @@ const SignUpForm = () => {
     // 컴포넌트가 언마운트될 때 생성된 모든 Object URL을 해제
     return () => {
       if (coverPreview) URL.revokeObjectURL(coverPreview);
-      menuPreviews.forEach(url => URL.revokeObjectURL(url));
+      menuPreviews.forEach((url) => URL.revokeObjectURL(url));
     };
   }, [coverPreview, menuPreviews]);
 
@@ -119,41 +127,57 @@ const SignUpForm = () => {
 
   // open/close는 화면에 입력창이 없으니 미리 등록
   useEffect(() => {
-    register("open", { valueAsNumber: true });
-    register("close", { valueAsNumber: true });
+    register('open');
+    register('close');
   }, [register]);
 
-
   const handleSubmit = (data: SignUpFormType) => {
+    // 시간 값을 안전하게 처리
+    const openTime = String(data.open || '');
+    const closeTime = String(data.close || '');
+
+    const openValue = openTime.includes(':')
+      ? openTime.replace(':', '')
+      : openTime;
+    const closeValue = closeTime.includes(':')
+      ? closeTime.replace(':', '')
+      : closeTime;
+
     const signUpRequest: SignUpRequest = {
       name: data.name,
       imageKey: data.imageKey,
       introduction: data.introduction,
       phone: data.phone,
       address: data.address,
-      detailAddress: "",
-      open: parseInt(data.open.replace(":", ""), 10),
-      close: parseInt(data.close.replace(":", ""), 10),
+      detailAddress: '',
+      open: parseInt(openValue, 10) || 0,
+      close: parseInt(closeValue, 10) || 0,
       menuImageKeys: data.menuImageKeys,
     };
     signUp(signUpRequest);
   };
 
-  const openRegister = register("open");
-  const closeRegister = register("close");
-
-  console.log(getValues());
+  const openRegister = register('open');
+  const closeRegister = register('close');
 
   return (
     <SignUpFormContainer>
       <SignUpFormTitle>가게 정보 입력</SignUpFormTitle>
       <SignUpFormInputWrapper>
         <SignUpFormInputLabel>가게 이름</SignUpFormInputLabel>
-        <SignUpFormInput type="text" placeholder="가게이름을 정확하게 입력해주세요" {...register("name")} />
+        <SignUpFormInput
+          type="text"
+          placeholder="가게이름을 정확하게 입력해주세요"
+          {...register('name')}
+        />
       </SignUpFormInputWrapper>
       <SignUpFormInputWrapper>
-        <SignUpFormInputLabel htmlFor={coverInputId}>대표 사진 업로드</SignUpFormInputLabel>
-        <SignUpFormImageInputDescription>이미지 크기: 362px X 190px</SignUpFormImageInputDescription>
+        <SignUpFormInputLabel htmlFor={coverInputId}>
+          대표 사진 업로드
+        </SignUpFormInputLabel>
+        <SignUpFormImageInputDescription>
+          이미지 크기: 362px X 190px
+        </SignUpFormImageInputDescription>
 
         <ImageDropLabel htmlFor={coverInputId} $w={362} $h={190}>
           {coverPreview ? (
@@ -161,7 +185,9 @@ const SignUpForm = () => {
           ) : (
             <Center>
               <img src={IcAddPhoto} alt="" aria-hidden />
-              <CenterText>{isPending ? "업로드 중..." : "사진 추가하기"}</CenterText>
+              <CenterText>
+                {isPending ? '업로드 중...' : '사진 추가하기'}
+              </CenterText>
             </Center>
           )}
         </ImageDropLabel>
@@ -175,15 +201,27 @@ const SignUpForm = () => {
       </SignUpFormInputWrapper>
       <SignUpFormInputWrapper>
         <SignUpFormInputLabel>한줄 소개</SignUpFormInputLabel>
-        <SignUpFormInput type="text" placeholder="한줄로 가게를 소개해주세요" {...register("introduction")} />
+        <SignUpFormInput
+          type="text"
+          placeholder="한줄로 가게를 소개해주세요"
+          {...register('introduction')}
+        />
       </SignUpFormInputWrapper>
       <SignUpFormInputWrapper>
         <SignUpFormInputLabel>연락처</SignUpFormInputLabel>
-        <SignUpFormInput type="text" placeholder="ex) 02-000-0000" {...register("phone")} />
+        <SignUpFormInput
+          type="text"
+          placeholder="ex) 02-000-0000"
+          {...register('phone')}
+        />
       </SignUpFormInputWrapper>
       <SignUpFormInputWrapper>
         <SignUpFormInputLabel>가게 주소 입력</SignUpFormInputLabel>
-        <SignUpFormInput type="text" placeholder="ex) 성남시 분당구 다시온로 ..." {...register("address")} />
+        <SignUpFormInput
+          type="text"
+          placeholder="ex) 성남시 분당구 다시온로 ..."
+          {...register('address')}
+        />
       </SignUpFormInputWrapper>
       <SignUpFormInputWrapper>
         <SignUpFormInputLabel>운영시간</SignUpFormInputLabel>
@@ -196,7 +234,8 @@ const SignUpForm = () => {
             onChange={(e) => {
               e.target.value = formatTimeInput(e.target.value);
               openRegister.onChange(e);
-            }} />
+            }}
+          />
           <div>~</div>
           <SignUpFormInputTime
             type="text"
@@ -212,15 +251,24 @@ const SignUpForm = () => {
       </SignUpFormInputWrapper>
       {/* 메뉴판 업로드 영역 */}
       <SignUpFormInputWrapper>
-        <SignUpFormInputLabel htmlFor={menuInputId}>포토 메뉴판</SignUpFormInputLabel>
-        <SignUpFormImageInputDescription>이미지 크기: 362px X 190px</SignUpFormImageInputDescription>
+        <SignUpFormInputLabel htmlFor={menuInputId}>
+          포토 메뉴판
+        </SignUpFormInputLabel>
+        <SignUpFormImageInputDescription>
+          이미지 크기: 362px X 190px
+        </SignUpFormImageInputDescription>
         <ImageDropLabel htmlFor={menuInputId} $w={362} $h={190}>
           {menuPreviews.length > 0 ? (
-            <PreviewImg src={menuPreviews[menuPreviews.length - 1]} alt="대표 사진 미리보기" />
+            <PreviewImg
+              src={menuPreviews[menuPreviews.length - 1]}
+              alt="대표 사진 미리보기"
+            />
           ) : (
             <Center>
               <img src={IcAddPhoto} alt="" aria-hidden />
-              <CenterText>{isPending ? "업로드 중..." : "사진 추가하기"}</CenterText>
+              <CenterText>
+                {isPending ? '업로드 중...' : '사진 추가하기'}
+              </CenterText>
             </Center>
           )}
         </ImageDropLabel>
@@ -233,7 +281,9 @@ const SignUpForm = () => {
           onChange={handleMenuImagesChange}
         />
       </SignUpFormInputWrapper>
-      <SignUpFormButton onClick={() => handleSubmit(getValues())} type="button">완료</SignUpFormButton>
+      <SignUpFormButton onClick={() => handleSubmit(getValues())} type="button">
+        완료
+      </SignUpFormButton>
     </SignUpFormContainer>
   );
 };
@@ -352,8 +402,8 @@ const SignUpFormImageInputDescription = styled.div`
 const ImageDropLabel = styled.label<{ $w?: number; $h?: number }>`
   position: relative;
   display: block;
-  width: ${({ $w }) => ($w ? `${$w}px` : "100%")};
-  height: ${({ $h }) => ($h ? `${$h}px` : "190px")};
+  width: ${({ $w }) => ($w ? `${$w}px` : '100%')};
+  height: ${({ $h }) => ($h ? `${$h}px` : '190px')};
   border-radius: 12px;
   background-color: ${({ theme }) => theme.colors.grayScale.gray30};
   overflow: hidden;
