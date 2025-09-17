@@ -1,6 +1,7 @@
 export const colors = {
   primary: {
-    primaryGradient: 'linear-gradient(257deg, #ff5125 0%, #ff6624d 50%, #ff8973 100%)',
+    primaryGradient:
+      'linear-gradient(257deg, #ff5125 0%, #ff6624d 50%, #ff8973 100%)',
     primary700: '#ff4625',
     primary500: '#ff564d',
     primary400: '#ff7d76',
