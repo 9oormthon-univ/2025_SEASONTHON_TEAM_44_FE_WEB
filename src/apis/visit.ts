@@ -36,3 +36,28 @@ export const getVisits = async (page: number, size: number) => {
   });
   return res.data;
 };
+
+export interface DailyVisit {
+  startHour: number;
+  endHour: number;
+  totalVisitors: number;
+  newVisitors: number;
+  revisits: number;
+}
+
+export const getDailyVisits = async () => {
+  const response = await axiosInstance.get<BaseResponse<DailyVisit[]>>("/stamps/me/visit-trends/daily");
+  return response.data;
+};
+
+export interface WeeklyVisit {
+  date: string;
+  totalVisitors: number;
+  newVisitors: number;
+  revisits: number;
+}
+
+export const getWeeklyVisits = async () => {
+  const response = await axiosInstance.get<BaseResponse<WeeklyVisit[]>>("/stamps/me/visit-trends/weekly");
+  return response.data;
+};
