@@ -5,7 +5,7 @@ import { useGetSimpleUserInfo } from "@hooks/users/useGetSimpleUserInfo.ts";
 import { useAuthStore } from "@stores/useAuthStore.ts";
 
 const Header = () => {
-  const { data, isPending } = useGetSimpleUserInfo();
+  const { data } = useGetSimpleUserInfo();
   const { logout } = useAuthStore()
 
   const handleLogout = () => {
@@ -13,14 +13,12 @@ const Header = () => {
     window.location.href = "/";
   };
 
-  if (!data || isPending) return null;
-
   return (
     <HeaderContainer>
       <img src={IcLogo} alt="" onClick={handleLogout}/>
       <HeaderProfileSection>
-        <img  src={data.response.profileImage ? data.response.profileImage : ImgProfileDefault} alt=""/>
-        <div>{data.response.name}님</div>
+        <img  src={data?.response.profileImage ? data.response.profileImage : ImgProfileDefault} alt=""/>
+        <div>{data?.response.name}님</div>
       </HeaderProfileSection>
     </HeaderContainer>
   );

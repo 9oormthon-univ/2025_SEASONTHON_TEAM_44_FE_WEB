@@ -8,6 +8,7 @@ import { useGetStoreInfo } from "@hooks/store/useGetStoreInfo.ts";
 import { usePostCoupon } from "@hooks/coupon/usePostCoupon.ts";
 import { useEffect, useState } from "react";
 import CouponSuccessModal from "@components/coupon/CouponSuccessModal.tsx";
+import Loading from "@components/common/Loading.tsx";
 
 const scheme = z.object({
   name: z.string().max(30, "쿠폰명은 최대 30자입니다."),
@@ -18,7 +19,7 @@ export type Coupon = z.infer<typeof scheme>;
 
 const CouponPage = () => {
   const { data, isPending } = useGetStoreInfo();
-  const { mutate, isSuccess } = usePostCoupon();
+  const { mutate, isSuccess, isPending: isPostPending } = usePostCoupon();
   const [isOpen, setIsOpen] = useState(false);
   const { register, getValues, watch, setValue } = useForm<Coupon>({
     resolver: zodResolver(scheme),
@@ -39,13 +40,13 @@ const CouponPage = () => {
     }
   }, [isSuccess, setValue]);
 
-  if (isPending) return null;
+  if (isPostPending || isPending) return <Loading />;
 
   return (
     <CouponContainer>
       <CouponTitle>쿠폰 관리</CouponTitle>
       <CouponManagementSection>
-        <CouponForm register={register} onSubmit={onSubmit} />
+        <CouponForm register={register} onSubmit={onSubmit} isPending={isPostPending} />
         <CouponPreview storeName={data?.response.name} watch={watch} />
         {isOpen && <CouponSuccessModal handleClose={() => setIsOpen(false)} />}
       </CouponManagementSection>

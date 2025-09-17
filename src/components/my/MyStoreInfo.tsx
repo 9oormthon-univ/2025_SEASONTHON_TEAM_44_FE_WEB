@@ -9,7 +9,7 @@ interface MyStoreInfoProps {
 
 const MyStoreInfo = ({ response }: MyStoreInfoProps) => {
   if (!response) return null;
-  const { name, imageUrl, address, introduction, open, phone, close, detailAddress } = response;
+  const { name, storeImageUrl, address, introduction, open, phone, close, detailAddress } = response;
   const menuImage = null;
 
   return (
@@ -19,7 +19,7 @@ const MyStoreInfo = ({ response }: MyStoreInfoProps) => {
         <S.MyStoreGridItem>
           <div>가게 대표 사진</div>
           <div className="item-description">이미지 크기: 362px X 190px</div>
-          <img src={imageUrl} alt="가게 대표 사진" />
+          <img src={storeImageUrl} alt="가게 대표 사진" />
         </S.MyStoreGridItem>
 
         {/* 포토 메뉴판 */}
@@ -27,7 +27,7 @@ const MyStoreInfo = ({ response }: MyStoreInfoProps) => {
           <div>포토 메뉴판</div>
           <div className="item-description">이미지 크기: 362px X 190px</div>
           {menuImage ?
-            <img src={imageUrl} alt="포토 메뉴판" />
+            <img src={storeImageUrl} alt="포토 메뉴판" />
             :
             <MyStoreInfoEmptyImageSection>
               <img src={IcMenuBook} style={{ width: "50px", height: "50px" }} alt="" />

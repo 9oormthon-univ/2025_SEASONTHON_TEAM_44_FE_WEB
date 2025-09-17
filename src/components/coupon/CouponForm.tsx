@@ -2,13 +2,15 @@ import styled from "@emotion/styled";
 import { useNavigate } from "react-router";
 import type { Coupon } from "@pages/CouponPage.tsx";
 import type { UseFormRegister } from "react-hook-form";
+import Loading from "@components/common/Loading.tsx";
 
 interface CouponFormProps {
   register: UseFormRegister<Coupon>,
   onSubmit: () => void;
+  isPending?: boolean;
 }
 
-const CouponForm = ({ register, onSubmit }: CouponFormProps) => {
+const CouponForm = ({ register, onSubmit, isPending }: CouponFormProps) => {
   const navigate = useNavigate();
 
   const cancelCoupon = () => {
@@ -33,7 +35,7 @@ const CouponForm = ({ register, onSubmit }: CouponFormProps) => {
       </CouponInputGroup>
       <CouponButtonGroup>
         <CouponButton buttonType="cancel" type="button" onClick={cancelCoupon}>취소하기</CouponButton>
-        <CouponButton buttonType="save" type="button" onClick={saveCoupon}>저장하기</CouponButton>
+        <CouponButton buttonType="save" type="button" onClick={saveCoupon}>{isPending ? <Loading /> : `저장하기`}</CouponButton>
       </CouponButtonGroup>
     </CouponFormContainer>
   );
