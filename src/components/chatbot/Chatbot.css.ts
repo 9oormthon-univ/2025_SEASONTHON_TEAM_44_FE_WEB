@@ -4,28 +4,38 @@ export const ChatbotButton = styled.button`
   position: fixed;
   bottom: 20px;
   right: 20px;
-  width: 100px;
-  height: 100px;
+  width: 135px;
+  height: 135px;
   border: none;
   background: none;
   cursor: pointer;
   z-index: 1000;
   transition: transform 0.2s ease;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 
   &:hover {
     transform: scale(1.05);
   }
 
   img {
-    width: 100%;
-    height: 100%;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 100px;
+    height: 100px;
     object-fit: contain;
+    z-index: 2;
   }
+
+  /* Lottie 애니메이션은 자동으로 뒤에 배치됨 */
 `;
 
 export const ChatbotModal = styled.div`
   position: fixed;
-  bottom: 125px;
+  bottom: 155px;
   right: 20px;
   width: 400px;
   height: 600px;
@@ -94,11 +104,21 @@ export const CloseButton = styled.button`
 export const ChatbotAvatar = styled.div`
   display: flex;
   justify-content: center;
+  align-items: center;
+  position: relative;
+  width: 126px;
+  height: 126px;
+  margin: 0 auto;
 
   img {
-    width: 126px;
-    height: 126px;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 100px;
+    height: 100px;
     object-fit: contain;
+    z-index: 2;
   }
 `;
 

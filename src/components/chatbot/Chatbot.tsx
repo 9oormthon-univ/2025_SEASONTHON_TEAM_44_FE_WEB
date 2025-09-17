@@ -1,6 +1,7 @@
 import { useState, useRef, useEffect } from 'react';
 import ReactMarkdown from 'react-markdown';
 import remarkGfm from 'remark-gfm';
+import Lottie from 'lottie-react';
 import {
   ChatbotButton,
   ChatbotModal,
@@ -26,6 +27,7 @@ import {
 import { usePostChat } from '@hooks/chatbot/usePostChat';
 import { postStoresInsight } from '@apis/store';
 import chatbotImage from '/public/chatbot.png';
+import chatbotLottie from '../../assets/lottie/lottie-chatbot.json';
 import NotiIcon from '../svg/NotiIcon';
 import TodayIcon from '../svg/TodayIcon';
 import ArrowTop from '../svg/ArrowTop';
@@ -248,6 +250,19 @@ export default function Chatbot() {
   return (
     <>
       <ChatbotButton onClick={() => setIsOpen(!isOpen)}>
+        <Lottie
+          animationData={chatbotLottie}
+          loop={true}
+          autoplay={true}
+          style={{
+            width: 100,
+            height: 100,
+            position: 'absolute',
+            top: 17.5,
+            left: 17.5,
+            zIndex: 1,
+          }}
+        />
         <img src={chatbotImage} alt="챗봇" />
       </ChatbotButton>
 
@@ -260,6 +275,19 @@ export default function Chatbot() {
             <ChatbotMain>
               <ChatbotTitle>챗봇 상담원 다온이</ChatbotTitle>
               <ChatbotAvatar>
+                <Lottie
+                  animationData={chatbotLottie}
+                  loop={true}
+                  autoplay={true}
+                  style={{
+                    width: 100,
+                    height: 100,
+                    position: 'absolute',
+                    top: 13,
+                    left: 13,
+                    zIndex: 1,
+                  }}
+                />
                 <img src={chatbotImage} alt="다온이" />
               </ChatbotAvatar>
               <ChatbotGreeting>무엇을 도와드릴까요?</ChatbotGreeting>
