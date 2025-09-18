@@ -145,4 +145,68 @@ const PreviewImg = styled.img`
   object-fit: cover;
 `;
 
-export { SignUpFormContainer, SignUpFormTitle, SignUpFormButton, SignUpFormInputWrapper, SignUpFormInputRow, SignUpFormInputLabel, SignUpFormInput, SignUpFormInputTime, SignUpFormImageInputDescription, ImageDropLabel, HiddenFileInput, Center, CenterText, PreviewImg };
+const MenuPreviewImage = styled.img`
+  width: 176px;
+  height: 92px;
+  object-fit: cover;
+`;
+
+const PreviewContainer = styled.div<{ count: number }>`
+  display: grid;
+  grid-template-columns: ${({ count }) => count > 0 ? `repeat(2, 1fr)` : '176px'};
+  grid-auto-columns: 176px;
+  gap: 15px; // 아이템 사이의 간격
+`;
+
+// 개별 미리보기 이미지와 삭제 버튼을 감싸는 아이템
+const PreviewItem = styled.div`
+  position: relative; // 삭제 버튼을 위한 기준점
+  width: 176px;
+  height: 92px;
+  border-radius: 12px;
+  overflow: hidden;
+`;
+
+// 삭제 버튼
+const RemoveButton = styled.button`
+  position: absolute;
+  top: 8px;
+  right: 8px;
+  width: 17px;
+  height: 17px;
+  border-radius: 50%;
+  background-color: ${({ theme }) => theme.colors.grayScale.gray800};
+  color: white;
+  border: none;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: bold;
+  z-index: 10; // 이미지 위에 보이도록
+
+  &:hover {
+    background-color: rgba(0, 0, 0, 0.8);
+  }
+`;
+
+export {
+  SignUpFormContainer,
+  SignUpFormTitle,
+  SignUpFormButton,
+  SignUpFormInputWrapper,
+  SignUpFormInputRow,
+  SignUpFormInputLabel,
+  SignUpFormInput,
+  SignUpFormInputTime,
+  SignUpFormImageInputDescription,
+  ImageDropLabel,
+  HiddenFileInput,
+  Center,
+  CenterText,
+  PreviewImg,
+  PreviewContainer,
+  PreviewItem,
+  RemoveButton,
+  MenuPreviewImage,
+};

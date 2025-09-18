@@ -10,6 +10,7 @@ import {
 } from '@hooks/signup/usePostSignUp.ts';
 import * as React from 'react';
 import * as S from  "@components/login/SignUpForm.css.ts"
+import IcCloseSmallLight from '@icon/ic-close-small-light.svg';
 
 // 입력값을 "HH:MM"으로 변환하는 함수
 const formatTimeInput = (value: string): string => {
@@ -99,7 +100,7 @@ const SignUpForm = () => {
     }
   };
 
-  /*const handleRemoveMenuImage = (indexToRemove: number) => {
+  const handleRemoveMenuImage = (indexToRemove: number) => {
     // 1. 미리보기 URL 메모리 해제
     URL.revokeObjectURL(menuPreviews[indexToRemove]);
 
@@ -113,7 +114,7 @@ const SignUpForm = () => {
       currentKeys.filter((_, index) => index !== indexToRemove),
       { shouldValidate: true },
     );
-  };*/
+  };
 
   useEffect(() => {
     // 컴포넌트가 언마운트될 때 생성된 모든 Object URL을 해제
@@ -257,7 +258,33 @@ const SignUpForm = () => {
         <S.SignUpFormImageInputDescription>
           이미지 크기: 362px X 190px
         </S.SignUpFormImageInputDescription>
-        <S.ImageDropLabel htmlFor={menuInputId} $w={362} $h={190}>
+        <S.PreviewContainer count={menuPreviews.length}>
+          {/* 업로드된 이미지를 map으로 순회하며 보여줍니다. */}
+          {menuPreviews.map((src, index) => (
+            <S.PreviewItem key={src}>
+              <S.MenuPreviewImage src={src} alt={`메뉴 사진 미리보기 ${index + 1}`} />
+              {/* 삭제 버튼 추가 */}
+              <S.RemoveButton
+                type="button"
+                onClick={() => handleRemoveMenuImage(index)}
+              >
+                <img src={IcCloseSmallLight} alt="" style={{objectFit: "cover"}} />
+              </S.RemoveButton>
+            </S.PreviewItem>
+          ))}
+
+          {/* '사진 추가하기' 버튼 */}
+          {menuPreviews.length < 4 && <S.ImageDropLabel htmlFor={menuInputId} $w={menuPreviews.length > 0 ? 176 : 362} $h={menuPreviews.length > 0 ? 92 : 190}>
+            <S.Center>
+              <img src={IcAddPhoto} alt="" aria-hidden />
+              <S.CenterText>
+                {isPending ? '업로드 중...' : '사진 추가하기'}
+              </S.CenterText>
+            </S.Center>
+          </S.ImageDropLabel>}
+        </S.PreviewContainer>
+
+       {/* <S.ImageDropLabel htmlFor={menuInputId} $w={362} $h={190}>
           {menuPreviews.length > 0 ? (
             <S.PreviewImg
               src={menuPreviews[menuPreviews.length - 1]}
@@ -271,7 +298,7 @@ const SignUpForm = () => {
               </S.CenterText>
             </S.Center>
           )}
-        </S.ImageDropLabel>
+        </S.ImageDropLabel>*/}
 
         <S.HiddenFileInput
           id={menuInputId} // 고유 ID 사용
