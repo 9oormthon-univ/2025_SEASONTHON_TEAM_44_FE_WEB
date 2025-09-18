@@ -10,7 +10,6 @@ interface QRGeneratorProps {
 const QRGenerator = ({ id }: QRGeneratorProps) => {
   const { mutate, data, isPending } = useGetGenerateQR();
   const generateQR = () => {
-    console.log(id);
     if (id == null) return;         // <- 방어
     mutate(String(id));             // <- 안전 변환
   };

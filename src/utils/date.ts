@@ -17,3 +17,19 @@ export const fmt = (iso: string) => {
 
   return `${get('year')}-${get('month')}-${get('day')} ${get('hour')}:${get('minute')}`;
 };
+
+export const getTodyDate = () => {
+  const todayDate = new Date().toLocaleDateString().replaceAll(" ", "");
+  const lastIndex = todayDate.length - 1;
+  return todayDate.slice(0, lastIndex);
+};
+
+export const formatTimeInput = (value: string): string => {
+  const digits = value.replace(/\D/g, '');
+
+  if (digits.length <= 2) {
+    return digits;
+  }
+
+  return `${digits.slice(0, 2)}:${digits.slice(2, 4)}`;
+};

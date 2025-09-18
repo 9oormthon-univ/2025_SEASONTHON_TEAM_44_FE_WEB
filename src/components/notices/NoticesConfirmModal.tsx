@@ -1,7 +1,6 @@
 import theme from "@styles/theme.ts";
-import { receiverOptions } from "@/types/notices.ts";
+import { type NoticeRequest, receiverOptions } from "@/types/notices.ts";
 import { usePostNotice } from "@hooks/notices/usePostNotice.ts";
-import type { NoticeRequest } from "@apis/notice.ts";
 import * as S from "@components/notices/NoticesConfirmModal.css.ts"
 
 interface NoticesConfirmModalProp {

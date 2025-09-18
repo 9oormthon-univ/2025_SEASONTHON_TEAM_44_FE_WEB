@@ -1,6 +1,6 @@
 import DonutChart from "@components/dashboard/DonutChart.tsx";
-import theme from "@styles/theme.ts";
 import * as S from "@components/dashboard/NoticeResponseRate.css.ts";
+import { handleChartData } from "@utils/dashboard.ts";
 
 interface NoticeResponseRateProps {
   notiId: number;
@@ -10,25 +10,7 @@ interface NoticeResponseRateProps {
 }
 
 const NoticeResponseRate = ({ unconfirmedCount, confirmedCount, title }: NoticeResponseRateProps) => {
-  const formattedUnconfirmedCount = unconfirmedCount < 0 ? 0 : unconfirmedCount;
-  const totalCount = confirmedCount + formattedUnconfirmedCount;
-  const confirmedRate = confirmedCount / totalCount * 100;
-  const unconfirmedRate = formattedUnconfirmedCount / totalCount * 100;
-
-  const newNoticeData = [
-    {
-      label: "확인 처리 완료",
-      value: confirmedRate,
-      color: theme.colors.primary.primary500,
-      textColor: theme.colors.primary.primary500,
-    },
-    {
-      label: "미확인",
-      value: (unconfirmedRate === 0 && confirmedRate === 0) ? 100 : unconfirmedRate,
-      color: theme.colors.grayScale.gray100,
-      textColor: theme.colors.grayScale.gray500,
-    },
-  ];
+  const newNoticeData = handleChartData(unconfirmedCount, confirmedCount);
   return (
     <S.NoticeResponseRateContainer>
       <S.NoticeResponseRateTitle>공지 반응률</S.NoticeResponseRateTitle>

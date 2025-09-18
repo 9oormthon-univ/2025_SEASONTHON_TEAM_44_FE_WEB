@@ -3,7 +3,6 @@ import ImgLoginMain from "@img/img-login-main.png";
 import * as S from "@components/login/LoginBox.css.ts";
 
 const LoginBox = () => {
-
   const handleKakaoLogin = () => {
     window.location.href = `https://kauth.kakao.com/oauth/authorize?response_type=code&client_id=${
       import.meta.env.VITE_KAKAO_ID

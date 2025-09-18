@@ -11,3 +11,29 @@ export const receiverType = [
 ];
 
 export type ReceiverOption = "ALL" | "BASIC" | "CERTIFIED";
+
+export interface NoticeRequest {
+  title: string;
+  content: string;
+  target: "ALL" | "BASIC" | "CERTIFIED";
+}
+
+export interface NoticeItem {
+  id: number;
+  title: string;
+  target: string;
+  targetCount: number;
+  readCount: number;
+  createdAt: string;
+  content: string;
+}
+
+export interface NoticeResponse {
+  content: NoticeItem[];
+  page: number;
+  size: number;
+  totalElements: number;
+  totalPages: number;
+  first: boolean;
+  last: boolean;
+}

@@ -1,5 +1,6 @@
 import { useQuery, keepPreviousData } from '@tanstack/react-query';
-import { getNotices, type NoticeItem, type NoticeResponse } from '@apis/notice.ts';
+import { getNotices } from '@apis/notice.ts';
+import type { NoticeItem, NoticeResponse } from "@/types/notices.ts";
 
 
 // select로 가공한 최종 타입

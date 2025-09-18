@@ -1,10 +1,5 @@
 import { axiosInstance } from "@apis/axiosInstance.ts";
-
-interface ImageUploadResponse {
-  key: string;
-  url: string;
-  expiresAt: number;
-}
+import type { ImageUploadResponse } from "@/types/image.ts";
 
 export const uploadImage = async (file: File) => {
   try {
