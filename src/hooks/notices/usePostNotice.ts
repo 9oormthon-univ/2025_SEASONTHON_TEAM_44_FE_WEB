@@ -1,5 +1,6 @@
 import { useMutation } from "@tanstack/react-query";
-import { type NoticeRequest, postNotice } from "@apis/notice.ts";
+import { postNotice } from "@apis/notice.ts";
+import type { NoticeRequest } from "@/types/notices.ts";
 
 export const usePostNotice = () => {
   return useMutation({

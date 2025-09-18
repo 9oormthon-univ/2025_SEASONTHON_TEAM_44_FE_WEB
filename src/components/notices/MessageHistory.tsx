@@ -1,6 +1,5 @@
 import * as S from '@components/notices/MessageHistory.css.ts';
-import type { NoticeItem } from "@apis/notice.ts";
-import { receiverType } from "@/types/notices.ts";
+import { type NoticeItem, receiverType } from "@/types/notices.ts";
 import { useState } from "react";
 import NoticeDetailModal from "@components/notices/NoticeDetailModal.tsx";
 import { fmt } from "@utils/date.ts";

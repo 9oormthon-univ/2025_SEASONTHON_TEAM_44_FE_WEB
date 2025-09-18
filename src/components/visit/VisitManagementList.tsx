@@ -1,7 +1,7 @@
 import * as S from "@components/visit/VisitManagementList.css.ts";
-import type { VisitItem } from "@apis/visit.ts";
 import { VisitManagementNoneList } from "@components/visit/VisitManagementList.css.ts";
 import { fmt } from "@utils/date.ts";
+import type { VisitItem } from "@/types/visit.ts";
 
 interface VisitManagementListProps {
   items: VisitItem[];

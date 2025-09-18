@@ -1,5 +1,4 @@
-import type { NoticeItem } from "@apis/notice.ts";
-import { receiverType } from "@/types/notices.ts";
+import { type NoticeItem, receiverType } from "@/types/notices.ts";
 import { fmt } from "@utils/date.ts";
 import * as S from "@components/notices/NoticeDetailModal.css.ts";
 

@@ -1,5 +1,5 @@
 import * as S from "@components/visit/CustomTooltip.css.ts";
-import type { DailyVisit, WeeklyVisit } from "@apis/visit.ts";
+import type { DailyVisit, WeeklyVisit } from "@/types/visit.ts";
 
 const getTodyDate = () => {
   const todayDate = new Date().toLocaleDateString().replaceAll(" ", "");

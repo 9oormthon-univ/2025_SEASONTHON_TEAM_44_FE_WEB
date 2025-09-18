@@ -1,6 +1,5 @@
 import styled from "@emotion/styled";
 import CouponForm from "@components/coupon/CouponForm.tsx";
-import CouponPreview from "@components/coupon/CouponPreview.css.ts";
 import { z } from "zod";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -9,6 +8,7 @@ import { usePostCoupon } from "@hooks/coupon/usePostCoupon.ts";
 import { useEffect, useState } from "react";
 import CouponSuccessModal from "@components/coupon/CouponSuccessModal.tsx";
 import Loading from "@components/common/Loading.tsx";
+import CouponPreview from "@components/coupon/CouponPreview.tsx";
 
 const scheme = z.object({
   name: z.string().max(30, "쿠폰명은 최대 30자입니다."),

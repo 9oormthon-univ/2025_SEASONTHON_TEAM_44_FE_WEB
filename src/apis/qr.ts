@@ -1,9 +1,6 @@
 import { axiosInstance } from "@apis/axiosInstance.ts";
 import type { BaseResponse } from "@/types/baseResponse.ts";
-
-export interface QrCodeResponse {
-  qrImage: string;
-}
+import type { QrCodeResponse } from "@/types/qr.ts";
 
 export const generateQrCode = async (url: string) => {
   try {
