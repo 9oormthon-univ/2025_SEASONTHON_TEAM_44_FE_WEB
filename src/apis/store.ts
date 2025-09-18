@@ -19,7 +19,6 @@ export const getStoreInfo = async () => {
     const response = await axiosInstance.get<BaseResponse<StoreInfoResponse>>(
       '/stores/me',
     );
-    console.log(response.data);
     return response.data;
   } catch (error) {
     console.error(error);

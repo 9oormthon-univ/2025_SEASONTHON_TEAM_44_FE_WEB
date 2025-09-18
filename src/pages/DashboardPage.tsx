@@ -1,10 +1,10 @@
 import NoticeResponseRate from "@components/dashboard/NoticeResponseRate.tsx";
-import RegionalRegularRate from "@components/dashboard/RegionalRegularRate.tsx";
 import TodaySummaryCard from "@components/dashboard/TodaySummaryCard.tsx";
 import TotalQRScans from "@components/dashboard/TotalQRScans.tsx";
 import styled from "@emotion/styled";
 import { useGetDashboard } from "@hooks/dashboard/useGetDashboard.ts";
 import Loading from "@components/common/Loading.tsx";
+import RegionalRegularRate from "@components/dashboard/RegionalRegularRate.tsx";
 
 const DashboardPage = () => {
   const { data, isPending, isSuccess } = useGetDashboard();

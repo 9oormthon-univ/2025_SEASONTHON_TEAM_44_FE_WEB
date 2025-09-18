@@ -1,4 +1,3 @@
-import styled from '@emotion/styled';
 import { useEffect, useId, useState } from 'react';
 import IcAddPhoto from '@icon/ic-add-photo.svg';
 import { z } from 'zod';
@@ -10,6 +9,8 @@ import {
   usePostSignUp,
 } from '@hooks/signup/usePostSignUp.ts';
 import * as React from 'react';
+import * as S from  "@components/login/SignUpForm.css.ts"
+import IcCloseSmallLight from '@icon/ic-close-small-light.svg';
 
 // 입력값을 "HH:MM"으로 변환하는 함수
 const formatTimeInput = (value: string): string => {
@@ -99,7 +100,7 @@ const SignUpForm = () => {
     }
   };
 
-  /*const handleRemoveMenuImage = (indexToRemove: number) => {
+  const handleRemoveMenuImage = (indexToRemove: number) => {
     // 1. 미리보기 URL 메모리 해제
     URL.revokeObjectURL(menuPreviews[indexToRemove]);
 
@@ -113,7 +114,7 @@ const SignUpForm = () => {
       currentKeys.filter((_, index) => index !== indexToRemove),
       { shouldValidate: true },
     );
-  };*/
+  };
 
   useEffect(() => {
     // 컴포넌트가 언마운트될 때 생성된 모든 Object URL을 해제
@@ -161,72 +162,72 @@ const SignUpForm = () => {
   const closeRegister = register('close');
 
   return (
-    <SignUpFormContainer>
-      <SignUpFormTitle>가게 정보 입력</SignUpFormTitle>
-      <SignUpFormInputWrapper>
-        <SignUpFormInputLabel>가게 이름</SignUpFormInputLabel>
-        <SignUpFormInput
+    <S.SignUpFormContainer>
+      <S.SignUpFormTitle>가게 정보 입력</S.SignUpFormTitle>
+      <S.SignUpFormInputWrapper>
+        <S.SignUpFormInputLabel>가게 이름</S.SignUpFormInputLabel>
+        <S.SignUpFormInput
           type="text"
           placeholder="가게이름을 정확하게 입력해주세요"
           {...register('name')}
         />
-      </SignUpFormInputWrapper>
-      <SignUpFormInputWrapper>
-        <SignUpFormInputLabel htmlFor={coverInputId}>
+      </S.SignUpFormInputWrapper>
+      <S.SignUpFormInputWrapper>
+        <S.SignUpFormInputLabel htmlFor={coverInputId}>
           대표 사진 업로드
-        </SignUpFormInputLabel>
-        <SignUpFormImageInputDescription>
+        </S.SignUpFormInputLabel>
+        <S.SignUpFormImageInputDescription>
           이미지 크기: 362px X 190px
-        </SignUpFormImageInputDescription>
+        </S.SignUpFormImageInputDescription>
 
-        <ImageDropLabel htmlFor={coverInputId} $w={362} $h={190}>
+        <S.ImageDropLabel htmlFor={coverInputId} $w={362} $h={190}>
           {coverPreview ? (
-            <PreviewImg src={coverPreview} alt="대표 사진 미리보기" />
+            <S.PreviewImg src={coverPreview} alt="대표 사진 미리보기" />
           ) : (
-            <Center>
+            <S.Center>
               <img src={IcAddPhoto} alt="" aria-hidden />
-              <CenterText>
+              <S.CenterText>
                 {isPending ? '업로드 중...' : '사진 추가하기'}
-              </CenterText>
-            </Center>
+              </S.CenterText>
+            </S.Center>
           )}
-        </ImageDropLabel>
+        </S.ImageDropLabel>
 
-        <HiddenFileInput
+        <S.HiddenFileInput
           id={coverInputId}
           type="file"
           accept="image/*"
           onChange={handleCoverChange}
         />
-      </SignUpFormInputWrapper>
-      <SignUpFormInputWrapper>
-        <SignUpFormInputLabel>한줄 소개</SignUpFormInputLabel>
-        <SignUpFormInput
+      </S.SignUpFormInputWrapper>
+      <S.SignUpFormInputWrapper>
+        <S.SignUpFormInputLabel>한줄 소개</S.SignUpFormInputLabel>
+        <S.SignUpFormInput
           type="text"
           placeholder="한줄로 가게를 소개해주세요"
           {...register('introduction')}
         />
-      </SignUpFormInputWrapper>
-      <SignUpFormInputWrapper>
-        <SignUpFormInputLabel>연락처</SignUpFormInputLabel>
-        <SignUpFormInput
+      </S.SignUpFormInputWrapper>
+      <S.SignUpFormInputWrapper>
+        <S.SignUpFormInputLabel>연락처</S.SignUpFormInputLabel>
+        <S.SignUpFormInput
           type="text"
           placeholder="ex) 02-000-0000"
           {...register('phone')}
         />
-      </SignUpFormInputWrapper>
-      <SignUpFormInputWrapper>
-        <SignUpFormInputLabel>가게 주소 입력</SignUpFormInputLabel>
-        <SignUpFormInput
+      </S.SignUpFormInputWrapper>
+      <S.SignUpFormInputWrapper>
+        <S.SignUpFormInputLabel>가게 주소 입력</S.SignUpFormInputLabel>
+        <S.SignUpFormInput
           type="text"
           placeholder="ex) 성남시 분당구 다시온로 ..."
           {...register('address')}
         />
-      </SignUpFormInputWrapper>
-      <SignUpFormInputWrapper>
-        <SignUpFormInputLabel>운영시간</SignUpFormInputLabel>
-        <SignUpFormInputRow>
-          <SignUpFormInputTime
+      </S.SignUpFormInputWrapper>
+      <S.SignUpFormInputWrapper>
+        <S.SignUpFormInputLabel>운영시간</S.SignUpFormInputLabel>
+        <S.SignUpFormInputRow>
+          <S.SignUpFormInputTime
             type="text"
             placeholder="00:00"
             maxLength={5}
@@ -237,7 +238,7 @@ const SignUpForm = () => {
             }}
           />
           <div>~</div>
-          <SignUpFormInputTime
+          <S.SignUpFormInputTime
             type="text"
             placeholder="23:59"
             maxLength={5}
@@ -247,190 +248,71 @@ const SignUpForm = () => {
               closeRegister.onChange(e);
             }}
           />
-        </SignUpFormInputRow>
-      </SignUpFormInputWrapper>
+        </S.SignUpFormInputRow>
+      </S.SignUpFormInputWrapper>
       {/* 메뉴판 업로드 영역 */}
-      <SignUpFormInputWrapper>
-        <SignUpFormInputLabel htmlFor={menuInputId}>
+      <S.SignUpFormInputWrapper>
+        <S.SignUpFormInputLabel htmlFor={menuInputId}>
           포토 메뉴판
-        </SignUpFormInputLabel>
-        <SignUpFormImageInputDescription>
+        </S.SignUpFormInputLabel>
+        <S.SignUpFormImageInputDescription>
           이미지 크기: 362px X 190px
-        </SignUpFormImageInputDescription>
-        <ImageDropLabel htmlFor={menuInputId} $w={362} $h={190}>
+        </S.SignUpFormImageInputDescription>
+        <S.PreviewContainer count={menuPreviews.length}>
+          {/* 업로드된 이미지를 map으로 순회하며 보여줍니다. */}
+          {menuPreviews.map((src, index) => (
+            <S.PreviewItem key={src}>
+              <S.MenuPreviewImage src={src} alt={`메뉴 사진 미리보기 ${index + 1}`} />
+              {/* 삭제 버튼 추가 */}
+              <S.RemoveButton
+                type="button"
+                onClick={() => handleRemoveMenuImage(index)}
+              >
+                <img src={IcCloseSmallLight} alt="" style={{objectFit: "cover"}} />
+              </S.RemoveButton>
+            </S.PreviewItem>
+          ))}
+
+          {/* '사진 추가하기' 버튼 */}
+          {menuPreviews.length < 4 && <S.ImageDropLabel htmlFor={menuInputId} $w={menuPreviews.length > 0 ? 176 : 362} $h={menuPreviews.length > 0 ? 92 : 190}>
+            <S.Center>
+              <img src={IcAddPhoto} alt="" aria-hidden />
+              <S.CenterText>
+                {isPending ? '업로드 중...' : '사진 추가하기'}
+              </S.CenterText>
+            </S.Center>
+          </S.ImageDropLabel>}
+        </S.PreviewContainer>
+
+       {/* <S.ImageDropLabel htmlFor={menuInputId} $w={362} $h={190}>
           {menuPreviews.length > 0 ? (
-            <PreviewImg
+            <S.PreviewImg
               src={menuPreviews[menuPreviews.length - 1]}
               alt="대표 사진 미리보기"
             />
           ) : (
-            <Center>
+            <S.Center>
               <img src={IcAddPhoto} alt="" aria-hidden />
-              <CenterText>
+              <S.CenterText>
                 {isPending ? '업로드 중...' : '사진 추가하기'}
-              </CenterText>
-            </Center>
+              </S.CenterText>
+            </S.Center>
           )}
-        </ImageDropLabel>
+        </S.ImageDropLabel>*/}
 
-        <HiddenFileInput
+        <S.HiddenFileInput
           id={menuInputId} // 고유 ID 사용
           type="file"
           accept="image/*"
           multiple
           onChange={handleMenuImagesChange}
         />
-      </SignUpFormInputWrapper>
-      <SignUpFormButton onClick={() => handleSubmit(getValues())} type="button">
+      </S.SignUpFormInputWrapper>
+      <S.SignUpFormButton onClick={() => handleSubmit(getValues())} type="button">
         완료
-      </SignUpFormButton>
-    </SignUpFormContainer>
+      </S.SignUpFormButton>
+    </S.SignUpFormContainer>
   );
 };
 
 export default SignUpForm;
-
-const SignUpFormContainer = styled.form`
-  display: flex;
-  flex-direction: column;
-  background-color: ${({ theme }) => theme.colors.white};
-  padding: 60px 100px;
-  border-radius: 30px;
-  border: none;
-  gap: 15px;
-`;
-
-const SignUpFormTitle = styled.div`
-  font: ${({ theme }) => theme.fonts.h2};
-  color: ${({ theme }) => theme.colors.black};
-`;
-
-const SignUpFormButton = styled.button`
-  padding: 17px 146px;
-  font: ${({ theme }) => theme.fonts.button1};
-  color: ${({ theme }) => theme.colors.white};
-  background-color: ${({ theme }) => theme.colors.primary.primary500};
-  white-space: nowrap;
-`;
-
-const SignUpFormInputWrapper = styled.div`
-  display: flex;
-  flex-direction: column;
-  gap: 5px;
-`;
-
-const SignUpFormInputRow = styled.div`
-  display: flex;
-  flex-direction: row;
-  justify-content: center;
-  align-items: center;
-  gap: 40px;
-  padding: 0 50px;
-
-  div {
-    font: ${({ theme }) => theme.fonts.body1};
-    color: ${({ theme }) => theme.colors.black};
-  }
-`;
-
-const SignUpFormInputLabel = styled.label`
-  font: ${({ theme }) => theme.fonts.body1};
-  color: ${({ theme }) => theme.colors.black};
-`;
-
-const SignUpFormInput = styled.input`
-  padding: 20px;
-  font: ${({ theme }) => theme.fonts.body1};
-  color: ${({ theme }) => theme.colors.black};
-  border-radius: 12px;
-  border: none;
-  outline: none;
-  background-color: ${({ theme }) => theme.colors.grayScale.gray30};
-
-  &::placeholder {
-    color: ${({ theme }) => theme.colors.grayScale.gray200};
-  }
-
-  &:hover {
-    box-shadow: inset 0 0 0 1px rgba(0, 0, 0, 0.12);
-    outline: none;
-  }
-
-  &:focus-visible {
-    outline: none;
-    border: none;
-    box-shadow: inset 0 0 0 1px rgba(0, 0, 0, 0.12);
-  }
-
-  transition: box-shadow 0.15s ease, background 0.15s ease;
-`;
-
-const SignUpFormInputTime = styled.input`
-  padding: 20px;
-  width: 85px;
-  font: ${({ theme }) => theme.fonts.body1};
-  color: ${({ theme }) => theme.colors.black};
-  border-radius: 12px;
-  text-align: center;
-  border: none;
-  outline: none;
-  background-color: ${({ theme }) => theme.colors.grayScale.gray30};
-
-  &::placeholder {
-    color: ${({ theme }) => theme.colors.grayScale.gray200};
-  }
-
-  &:hover {
-    box-shadow: inset 0 0 0 1px rgba(0, 0, 0, 0.12);
-    outline: none;
-  }
-
-  &:focus-visible {
-    outline: none;
-    border: none;
-    box-shadow: inset 0 0 0 1px rgba(0, 0, 0, 0.12);
-  }
-
-  transition: box-shadow 0.15s ease, background 0.15s ease;
-`;
-
-const SignUpFormImageInputDescription = styled.div`
-  font: ${({ theme }) => theme.fonts.body1};
-  color: ${({ theme }) => theme.colors.grayScale.gray400};
-`;
-
-const ImageDropLabel = styled.label<{ $w?: number; $h?: number }>`
-  position: relative;
-  display: block;
-  width: ${({ $w }) => ($w ? `${$w}px` : '100%')};
-  height: ${({ $h }) => ($h ? `${$h}px` : '190px')};
-  border-radius: 12px;
-  background-color: ${({ theme }) => theme.colors.grayScale.gray30};
-  overflow: hidden;
-  cursor: pointer;
-`;
-
-const HiddenFileInput = styled.input`
-  display: none;
-`;
-
-const Center = styled.div`
-  position: absolute;
-  inset: 0;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  gap: 8px;
-`;
-
-const CenterText = styled.div`
-  font: ${({ theme }) => theme.fonts.body3};
-  color: ${({ theme }) => theme.colors.grayScale.gray400};
-`;
-
-const PreviewImg = styled.img`
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-`;
