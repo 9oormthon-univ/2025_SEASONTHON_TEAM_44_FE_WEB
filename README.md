@@ -25,7 +25,7 @@ https://ceo-dasion.vercel.app/
 |------|-----------|
 | Frontend Framework | [React 19](https://react.dev/) |
 | Build Tool | [Vite 7](https://vitejs.dev/) |
-| Styling | [Emotion](https://emotion.sh/docs/introduction) |
+| Styling | [Emotion](https://emotion.sh/docs/introduction), [LottieFiles](https://lottiefiles.com/) |
 | State Management | [Zustand](https://zustand-demo.pmnd.rs/), [TanStack Query](https://tanstack.com/query/latest) |
 | Form | [React Hook Form](https://react-hook-form.com/), [Zod](https://zod.dev/) |
 | Network | [Axios](https://axios-http.com/) |
