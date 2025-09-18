@@ -1,3 +1,5 @@
+<img width="1920" height="1080" alt="Frame 44" src="https://github.com/user-attachments/assets/e9ceac84-4f77-4f98-a30d-59efe5a80f9e" />
+
 # 📌 Dasion - 사장님 웹
 
 > 사장님만을 위한 단골 관리 솔루션 사장님 웹 페이지
