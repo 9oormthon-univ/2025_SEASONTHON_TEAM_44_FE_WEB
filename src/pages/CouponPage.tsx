@@ -1,6 +1,6 @@
 import styled from "@emotion/styled";
 import CouponForm from "@components/coupon/CouponForm.tsx";
-import CouponPreview from "@components/coupon/CouponPreview.tsx";
+import CouponPreview from "@components/coupon/CouponPreview.css.ts";
 import { z } from "zod";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
