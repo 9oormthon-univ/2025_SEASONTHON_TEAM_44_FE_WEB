@@ -7,9 +7,10 @@ interface SimpleUserInfo {
   region: string;
 }
 
+/* api 없어진듯? */
 export const getSimpleUserInfo = async () => {
   try {
-    const response = await axiosInstance.get<BaseResponse<SimpleUserInfo>>("/user/me/simple");
+    const response = await axiosInstance.get<BaseResponse<SimpleUserInfo>>("/users/me/simple");
     return response.data;
   } catch ( error ) {
     console.error(error);

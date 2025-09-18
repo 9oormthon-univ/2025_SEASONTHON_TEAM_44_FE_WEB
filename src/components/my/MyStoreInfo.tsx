@@ -1,46 +1,73 @@
-import * as S from "@components/my/MySotreInfo.css.ts"
+import * as S from "@components/my/MySotreInfo.css.ts";
 import type { StoreInfoResponse } from "@apis/store.ts";
+import IcMenuBook from "@icon/ic-menu-book.svg";
+import { MyStoreInfoEmptyImageSection } from "@components/my/MySotreInfo.css.ts";
 
 interface MyStoreInfoProps {
   response: StoreInfoResponse | undefined;
 }
 
-const MyStoreInfo = ( { response }: MyStoreInfoProps) => {
+const MyStoreInfo = ({ response }: MyStoreInfoProps) => {
   if (!response) return null;
-  const { name, imageUrl, address, introduction, open, phone, close, detailAddress } = response
+  const { name, storeImageUrl, address, introduction, open, phone, close, detailAddress } = response;
+  const menuImage = null;
 
   return (
     <>
-      <S.MyStoreInfoImageSection>
-        <div>가게 대표 사진</div>
-        <div>이미지 크기: 362px X 190px</div>
-        <img src={imageUrl} alt="" />
-      </S.MyStoreInfoImageSection>
-      {/* 가계 정보 영역 */}
-      <S.MyStoreInfoInfoSection>
-        <S.MyStoreInfoItem>
+      <S.MyStoreGridContainer>
+        {/* 가게 대표 사진 */}
+        <S.MyStoreGridItem>
+          <div>가게 대표 사진</div>
+          <div className="item-description">이미지 크기: 362px X 190px</div>
+          <img src={storeImageUrl} alt="가게 대표 사진" />
+        </S.MyStoreGridItem>
+
+        {/* 포토 메뉴판 */}
+        <S.MyStoreGridItem>
+          <div>포토 메뉴판</div>
+          <div className="item-description">이미지 크기: 362px X 190px</div>
+          {menuImage ?
+            <img src={storeImageUrl} alt="포토 메뉴판" />
+            :
+            <MyStoreInfoEmptyImageSection>
+              <img src={IcMenuBook} style={{ width: "50px", height: "50px" }} alt="" />
+              <div style={{ color: "#7F7D7D" }}>아직 등록된 메뉴판이 없어요</div>
+            </MyStoreInfoEmptyImageSection>
+          }
+        </S.MyStoreGridItem>
+
+        {/* 가게 이름 */}
+        <S.MyStoreGridItem>
           <div>가게 이름</div>
-          <div>{name}</div>
-        </S.MyStoreInfoItem>
-        <S.MyStoreInfoItem>
+          <div className="item-value">{name}</div>
+        </S.MyStoreGridItem>
+
+        {/* 한줄 소개 */}
+        <S.MyStoreGridItem>
           <div>한줄 소개</div>
-          <div>{introduction}</div>
-        </S.MyStoreInfoItem>
-        <S.MyStoreInfoItem>
+          <div className="item-value">{introduction}</div>
+        </S.MyStoreGridItem>
+
+        {/* 연락처 */}
+        <S.MyStoreGridItem>
           <div>연락처</div>
-          <div>{phone}</div>
-        </S.MyStoreInfoItem>
-        <S.MyStoreInfoItem>
+          <div className="item-value">{phone}</div>
+        </S.MyStoreGridItem>
+
+        {/* 운영시간 */}
+        <S.MyStoreGridItem>
           <div>운영시간</div>
-          <div>{open} ~ {close}</div>
-        </S.MyStoreInfoItem>
-        <S.MyStoreInfoItem>
+          <div className="item-value">{open} ~ {close}</div>
+        </S.MyStoreGridItem>
+
+        {/* 주소 (한 칸을 넓게 사용하고 싶을 경우) */}
+        <S.MyStoreGridItem style={{ gridColumn: "1 / -1" }}>
           <div>주소</div>
-          <div>{address} {detailAddress}</div>
-        </S.MyStoreInfoItem>
-      </S.MyStoreInfoInfoSection>
+          <div className="item-value">{address} {detailAddress}</div>
+        </S.MyStoreGridItem>
+      </S.MyStoreGridContainer>
     </>
-  )
+  );
 };
 
 export default MyStoreInfo;

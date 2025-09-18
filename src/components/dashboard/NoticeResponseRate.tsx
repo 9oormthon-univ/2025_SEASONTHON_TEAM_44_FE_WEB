@@ -3,18 +3,28 @@ import styled from "@emotion/styled";
 import theme from "@styles/theme.ts";
 
 interface NoticeResponseRateProps {
-  notiId: number
-  title: string
-  confirmedCount: number
-  unconfirmedCount: number
+  notiId: number;
+  title: string;
+  confirmedCount: number;
+  unconfirmedCount: number;
 }
 
 const NoticeResponseRate = ({ unconfirmedCount, confirmedCount, title }: NoticeResponseRateProps) => {
 
   const newNoticeData = [
-    { label: "확인 처리 완료", value: confirmedCount, color: theme.colors.primary.primary500, textColor: theme.colors.primary.primary500 },
-    { label: "미확인", value: unconfirmedCount, color: theme.colors.grayScale.gray100, textColor: theme.colors.grayScale.gray500 },
-  ]
+    {
+      label: "확인 처리 완료",
+      value: confirmedCount,
+      color: theme.colors.primary.primary500,
+      textColor: theme.colors.primary.primary500,
+    },
+    {
+      label: "미확인",
+      value: (unconfirmedCount === 0 && confirmedCount === 0) ? 100 : unconfirmedCount,
+      color: theme.colors.grayScale.gray100,
+      textColor: theme.colors.grayScale.gray500,
+    },
+  ];
   return (
     <NoticeResponseRateContainer>
       <NoticeResponseRateTitle>공지 반응률</NoticeResponseRateTitle>
@@ -37,7 +47,7 @@ const NoticeResponseRate = ({ unconfirmedCount, confirmedCount, title }: NoticeR
             </TodaySummaryContentItemValue>
           </TodaySummaryContentItemValueSection>
         </NoticeResponseRateContentSection>
-      ) : <div>등록된 공지가 없습니다</div> }
+      ) : <div>등록된 공지가 없습니다</div>}
     </NoticeResponseRateContainer>
   );
 };

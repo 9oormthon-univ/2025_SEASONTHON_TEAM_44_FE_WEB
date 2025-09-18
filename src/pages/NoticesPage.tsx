@@ -6,6 +6,7 @@ import MessageHistory from "@components/notices/MessageHistory.tsx";
 import ListPageAction from "@components/common/ListPageAction.tsx";
 import { useHandleListPageNumber } from "@hooks/visit/useHandleListPageNumber.ts";
 import { useGetNotices } from "@hooks/notices/useGetNotices.ts";
+import Loading from "@components/common/Loading.tsx";
 
 const PAGE_SIZE = 9;
 
@@ -22,7 +23,11 @@ const NoticesPage = () => {
       refetch();
     }
   }, [currentTab, refetch, setCurrentPage]);
-  console.log(data);
+
+  if (isLoading) {
+    return <Loading />
+  }
+
   return (
     <NoticesContainer currentTab={currentTab}>
       <NoticesTab currentTab={currentTab} setCurrentTab={setCurrentTab} />

@@ -3,6 +3,7 @@ export const menuItems = {
   qrManagement: "QR관리",
   visitManagement: "방문 · 적립 관리",
   notices: "공지 · 메세지",
+  coupon: "쿠폰 관리",
   myInfo: "내 정보",
 };
 

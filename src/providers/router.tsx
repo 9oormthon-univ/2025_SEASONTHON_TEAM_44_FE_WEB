@@ -9,6 +9,7 @@ import DashboardPage from "@pages/DashboardPage.tsx";
 import ProtectedRouteLayout from "@layouts/ProtectedRouteLayout.tsx";
 import CallbackPage from "@pages/CallbackPage.tsx";
 import SignUpPage from "@pages/SignUpPage.tsx";
+import CouponPage from "@pages/CouponPage.tsx";
 
 export const router = createBrowserRouter([
   {
@@ -66,6 +67,16 @@ export const router = createBrowserRouter([
     ],
   },
   {
+    path: '/coupon',
+    element: <RootLayout />,
+    children: [
+      {
+        index: true,
+        element: <CouponPage />,
+      },
+    ],
+  },
+  {
     path: '/my-info',
     element: <RootLayout />,
     children: [
@@ -77,12 +88,6 @@ export const router = createBrowserRouter([
   },
   {
     'path': '/sign-up',
-    element: <RootLayout />,
-    children: [
-      {
-        index: true,
-        element: <SignUpPage />,
-      }
-    ]
+    element:< SignUpPage />,
   },
 ]);

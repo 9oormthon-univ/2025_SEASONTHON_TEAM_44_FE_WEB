@@ -9,7 +9,7 @@ export interface NoticeRequest {
 
 export const postNotice = async (request: NoticeRequest) => {
   try {
-    const response = await axiosInstance.post("/owner/noti", request);
+    const response = await axiosInstance.post("/notis", request);
     return response.data;
   } catch ( error ) {
     console.error(error);
@@ -39,7 +39,7 @@ export interface NoticeResponse {
 export const getNotices = async (page: number, size: number): Promise<NoticeResponse> => {
   try {
     const response = await axiosInstance.get<BaseResponse<NoticeResponse>>(
-      '/owner/noti/logs',
+      '/notis/logs',
       { params: { page, size } }
     );
 
@@ -51,7 +51,7 @@ export const getNotices = async (page: number, size: number): Promise<NoticeResp
     return payload;
   } catch (error) {
     console.error(error);
-    throw error; // ❌ return undefined 대신 반드시 throw
+    throw error;
   }
 };
 

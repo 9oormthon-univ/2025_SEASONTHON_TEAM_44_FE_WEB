@@ -11,11 +11,12 @@ export interface SignUpRequest {
   detailAddress: string;
   open: number;
   close: number;
+  menuImageKeys: string[];
 }
 
 export const signUp = async (request: SignUpRequest) => {
   try {
-    const response = await axiosInstance.post("/owner/store", request);
+    const response = await axiosInstance.post("/stores", request);
     console.log(response.data);
     return response.data;
   } catch ( error ) {

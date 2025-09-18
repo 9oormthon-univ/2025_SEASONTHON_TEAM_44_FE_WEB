@@ -2,18 +2,23 @@ import styled from "@emotion/styled";
 import IcLogo from "@icon/ic-logo.svg"
 import ImgProfileDefault from "@img/img-example-profile.png";
 import { useGetSimpleUserInfo } from "@hooks/users/useGetSimpleUserInfo.ts";
+import { useAuthStore } from "@stores/useAuthStore.ts";
 
 const Header = () => {
-  const { data, isPending } = useGetSimpleUserInfo();
+  const { data } = useGetSimpleUserInfo();
+  const { logout } = useAuthStore()
 
-  if (!data || isPending) return null;
+  const handleLogout = () => {
+    logout();
+    window.location.href = "/";
+  };
 
   return (
     <HeaderContainer>
-      <img src={IcLogo} alt=""/>
+      <img src={IcLogo} alt="" onClick={handleLogout}/>
       <HeaderProfileSection>
-        <img  src={data.response.profileImage ? data.response.profileImage : ImgProfileDefault}/>
-        <div>{data.response.name}님</div>
+        <img  src={data?.response.profileImage ? data.response.profileImage : ImgProfileDefault} alt=""/>
+        <div>{data?.response.name}님</div>
       </HeaderProfileSection>
     </HeaderContainer>
   );
