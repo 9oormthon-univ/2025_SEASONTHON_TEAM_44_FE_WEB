@@ -13,7 +13,7 @@ const MyInfoPage = () => {
 
   return (
     <MyInfoContainer>
-      <MyInfoHeader address={data?.response.address} />
+      <MyInfoHeader category={data?.response.category} />
       <MyStoreInfo response={data?.response} />
     </MyInfoContainer>
   );

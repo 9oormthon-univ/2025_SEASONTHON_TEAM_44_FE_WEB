@@ -6,6 +6,7 @@ export interface StoreInfoResponse {
   name: string;
   storeImageUrl: string;
   introduction: string;
+  category: string;
   phone: string;
   address: string;
   detailAddress: string;
