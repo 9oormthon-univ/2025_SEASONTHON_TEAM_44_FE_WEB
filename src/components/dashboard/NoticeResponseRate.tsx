@@ -11,16 +11,20 @@ interface NoticeResponseRateProps {
 
 const NoticeResponseRate = ({ unconfirmedCount, confirmedCount, title }: NoticeResponseRateProps) => {
 
+  const totalCount = confirmedCount + unconfirmedCount;
+  const confirmedRate = confirmedCount / totalCount * 100;
+  const unconfirmedRate = unconfirmedCount / totalCount * 100;
+
   const newNoticeData = [
     {
       label: "확인 처리 완료",
-      value: confirmedCount,
+      value: confirmedRate,
       color: theme.colors.primary.primary500,
       textColor: theme.colors.primary.primary500,
     },
     {
       label: "미확인",
-      value: (unconfirmedCount === 0 && confirmedCount === 0) ? 100 : unconfirmedCount,
+      value: (unconfirmedRate === 0 && confirmedRate === 0) ? 100 : unconfirmedRate,
       color: theme.colors.grayScale.gray100,
       textColor: theme.colors.grayScale.gray500,
     },
