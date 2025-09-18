@@ -70,7 +70,8 @@ const CouponInputWrapper = styled.div`
     padding: 20px;
     border-radius: 12px;
     background-color: ${({ theme }) => theme.colors.grayScale.gray30};
-    border: none;
+    border: 1px solid transparent;
+    outline: none;
     font: ${({ theme }) => theme.fonts.body1};
     color: ${({ theme }) => theme.colors.black};
 
@@ -79,8 +80,15 @@ const CouponInputWrapper = styled.div`
       color: ${({ theme }) => theme.colors.grayScale.gray200};
     }
 
-    &:focus {
+    &:hover {
+      box-shadow: inset 0 0 0 1px rgba(0, 0, 0, 0.12);
+      border: 1px solid ${({ theme }) => theme.colors.primary.primary500};
+    }
+
+    &:focus-visible {
       outline: none;
+      box-shadow: inset 0 0 0 1px rgba(0, 0, 0, 0.12);
+      border: 1px solid ${({ theme }) => theme.colors.primary.primary500};
     }
   }
 `;

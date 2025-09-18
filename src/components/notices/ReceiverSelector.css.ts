@@ -12,14 +12,21 @@ const Trigger = styled.button`
   color: ${({ theme }) => theme.colors.black};
   border-radius: 12px;
   background-color: ${({ theme }) => theme.colors.grayScale.gray30};;
-  border: none;
+  border: 1px solid transparent;
   outline: none;
   position: relative;
   text-align: left;
   transition: box-shadow 0.15s ease, background 0.15s ease;
-
+  
   &:hover {
     box-shadow: inset 0 0 0 1px rgba(0, 0, 0, 0.12);
+    border: 1px solid ${({ theme }) => theme.colors.primary.primary500};
+  }
+
+  &:focus-visible {
+    outline: none;
+    box-shadow: inset 0 0 0 1px rgba(0, 0, 0, 0.12);
+    border: 1px solid ${({ theme }) => theme.colors.primary.primary500};
   }
 
   &:disabled {

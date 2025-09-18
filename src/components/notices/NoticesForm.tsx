@@ -3,8 +3,8 @@ import * as S from "@components/notices/NoticesForm.css.ts";
 import { useMessageForm } from "@hooks/notices/useMessageForm.ts";
 import { receiverOptions } from "@/types/notices.ts";
 import { useState } from "react";
-import NoticesConfirmModal from "@components/notices/NoticesConfirmModal.tsx";
 import NoticesMessageSuccessModal from "@components/notices/NoticesMessageSuccessModal.tsx";
+import NoticesConfirmModal from "@components/notices/NoticesConfirmModal.tsx";
 
 const NoticesForm = () => {
   const { register, handleSubmit, receiver, onSubmit, onChange, getValues } = useMessageForm();

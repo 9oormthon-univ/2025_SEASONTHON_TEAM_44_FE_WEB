@@ -24,7 +24,7 @@ const NoticesFormInput = styled.input`
   color: ${({ theme }) => theme.colors.black};
   border-radius: 12px;
   background-color: ${({ theme }) => theme.colors.grayScale.gray30};;
-  border: none;
+  border: 1px solid transparent;
   outline: none;
   
   &::placeholder {
@@ -33,13 +33,13 @@ const NoticesFormInput = styled.input`
 
   &:hover {
     box-shadow: inset 0 0 0 1px rgba(0, 0, 0, 0.12);
-    outline: none;
+    border: 1px solid ${({ theme }) => theme.colors.primary.primary500};
   }
 
   &:focus-visible {
     outline: none;
-    border: none;
     box-shadow: inset 0 0 0 1px rgba(0, 0, 0, 0.12);
+    border: 1px solid ${({ theme }) => theme.colors.primary.primary500};
   }
 
   transition: box-shadow 0.15s ease, background 0.15s ease;
@@ -51,12 +51,23 @@ const NoticesFormTextArea = styled.textarea`
   color: ${({ theme }) => theme.colors.black};
   border-radius: 12px;
   background-color: ${({ theme }) => theme.colors.grayScale.gray30};;
-  border: none;
+  border: 1px solid transparent;
   outline: none;
   min-height: 69px;
 
   &::placeholder {
     color: ${({ theme }) => theme.colors.grayScale.gray200};
+  }
+
+  &:hover {
+    box-shadow: inset 0 0 0 1px rgba(0, 0, 0, 0.12);
+    border: 1px solid ${({ theme }) => theme.colors.primary.primary500};
+  }
+
+  &:focus-visible {
+    outline: none;
+    box-shadow: inset 0 0 0 1px rgba(0, 0, 0, 0.12);
+    border: 1px solid ${({ theme }) => theme.colors.primary.primary500};
   }
 `;
 

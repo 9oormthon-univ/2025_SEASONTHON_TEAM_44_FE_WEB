@@ -6,6 +6,7 @@ export interface StoreInfoResponse {
   name: string;
   storeImageUrl: string;
   introduction: string;
+  category: string;
   phone: string;
   address: string;
   detailAddress: string;
@@ -19,7 +20,6 @@ export const getStoreInfo = async () => {
     const response = await axiosInstance.get<BaseResponse<StoreInfoResponse>>(
       '/stores/me',
     );
-    console.log(response.data);
     return response.data;
   } catch (error) {
     console.error(error);

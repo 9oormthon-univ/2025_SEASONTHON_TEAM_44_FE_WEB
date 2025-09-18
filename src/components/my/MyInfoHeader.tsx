@@ -4,10 +4,10 @@ import { useGetSimpleUserInfo } from "@hooks/users/useGetSimpleUserInfo.ts";
 import ImgExampleProfile from "@img/img-example-profile.png";
 
 interface MyInfoHeaderProps {
-  address: string | undefined;
+  category: string | undefined;
 }
 
-const MyInfoHeader = ({ address }: MyInfoHeaderProps) => {
+const MyInfoHeader = ({ category }: MyInfoHeaderProps) => {
   const { data, isSuccess } = useGetSimpleUserInfo();
 
   if (!isSuccess || !data) return null;
@@ -18,7 +18,7 @@ const MyInfoHeader = ({ address }: MyInfoHeaderProps) => {
         <S.MyInfoProfileImage src={data.response.profileImage ? data.response.profileImage : ImgExampleProfile} alt="" />
         <S.MyInfoProfileInner>
           <div>{data.response.name}</div>
-          <div><img src={IcLocation} alt="" />{address}</div>
+          <div><img src={IcLocation} alt="" />{category}</div>
         </S.MyInfoProfileInner>
       </S.MyInfoProfileSection>
       <S.MyInfoEditButton>정보 수정</S.MyInfoEditButton>

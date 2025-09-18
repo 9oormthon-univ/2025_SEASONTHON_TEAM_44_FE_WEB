@@ -1,8 +1,8 @@
 // components/dashboard/RegionDonutChart.tsx
 import { Cell, Pie, PieChart, ResponsiveContainer, Tooltip } from "recharts";
 import styled from "@emotion/styled";
-import theme from "@styles/theme.ts";
 import { useId } from "react";
+import { getDongFromAddress } from "@utils/region.ts";
 
 export interface DonutDatum {
   label: string;
@@ -47,7 +47,7 @@ const RegionDonutChart = ({
   // 2) 라벨을 붙일 상위 maxLabeled 항목 집합
   const labeledSet = new Set(displayed.slice(0, maxLabeled).map((d) => d.label));
 
-  const rankMap = new Map(displayed.map((d, i) => [d.label, i]));
+  /*const rankMap = new Map(displayed.map((d, i) => [d.label, i]));*/
 
   const renderDualLabels = (props: any) => {
     const { cx, cy, midAngle, percent, payload } = props;
@@ -64,10 +64,10 @@ const RegionDonutChart = ({
     const disp = Math.round(percent * 100);
     const color = payload.textColor || payload.color;
 
-    const rank = rankMap.get(payload.label) ?? 999;
+    /*const rank = rankMap.get(payload.label) ?? 999;*/
 
-    const nameColor =
-      rank < 1 ? theme.colors.white : theme.colors.primary.primary700;
+/*    const nameColor =
+      rank < 1 ? theme.colors.white : theme.colors.primary.primary700;*/
 
     return (
       <g transform={`translate(${ax}, ${ay})`}>
@@ -79,7 +79,7 @@ const RegionDonutChart = ({
           height="100%"
         >
           {/* ← 폰트/컬러는 theme 값 그대로 사용 */}
-          <NameLabel style={{ color: nameColor }}>{payload.label}</NameLabel>
+          <NameLabel>{getDongFromAddress(payload.label)}</NameLabel>
         </foreignObject>
 
         {/* 퍼센트: 기준점 아래 */}
@@ -159,7 +159,7 @@ const ChartBox = styled.div`
 const NameLabel = styled.div`
   display: inline-block;
   font: ${({ theme }) => theme.fonts.sub2};
-  color: ${({ theme }) => theme.colors.primary.primary700};
+  color: ${({ theme }) => theme.colors.black};
   text-align: center;
   white-space: nowrap;
 `;
