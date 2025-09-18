@@ -47,7 +47,7 @@ const TodaySummaryCard = ({ visitors, diffVisitors, diffRevisitRegulars, diffNew
           <div>재방문 단골 수</div>
           <S.TodaySummaryContentItemValueSection isIncrease={!isMinusValue(diffVisitors)}>
             <div>{revisitRegulars}</div>
-            <img src={isMinusValue(diffRevisitRegulars) ? IcArrowDown : IcArrowUp}/>
+            <img src={isMinusValue(diffRevisitRegulars) ? IcArrowDown : IcArrowUp} alt=""/>
             <div>{formatNumber(diffRevisitRegulars)}</div>
           </S.TodaySummaryContentItemValueSection>
         </S.TodaySummaryContentItem>
