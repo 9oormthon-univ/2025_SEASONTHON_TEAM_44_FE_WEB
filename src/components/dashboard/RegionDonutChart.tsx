@@ -3,6 +3,7 @@ import { Cell, Pie, PieChart, ResponsiveContainer, Tooltip } from "recharts";
 import styled from "@emotion/styled";
 import theme from "@styles/theme.ts";
 import { useId } from "react";
+import { getDongFromAddress } from "@utils/region.ts";
 
 export interface DonutDatum {
   label: string;
@@ -79,7 +80,7 @@ const RegionDonutChart = ({
           height="100%"
         >
           {/* ← 폰트/컬러는 theme 값 그대로 사용 */}
-          <NameLabel style={{ color: nameColor }}>{payload.label}</NameLabel>
+          <NameLabel style={{ color: nameColor }}>{getDongFromAddress(payload.label)}</NameLabel>
         </foreignObject>
 
         {/* 퍼센트: 기준점 아래 */}

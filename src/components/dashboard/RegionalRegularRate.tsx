@@ -1,6 +1,7 @@
 import RegionDonutChart from "@components/dashboard/RegionDonutChart.tsx";
 import theme from "@styles/theme.ts";
 import * as S from "@components/dashboard/RegionalRegularRate.css.ts";
+import { getDongFromAddress } from "@utils/region.ts";
 
 interface RegionRatio {
   region: string;
@@ -62,7 +63,7 @@ const RegionalRegularRate = ({ regionRatios }: RegionalRegularRate) => {
             {regionData.map((item, index) => (
               <S.RegionalRegularRateContentItem key={index}>
                 <div style={{ backgroundColor: item.color }} />
-                <div>{`${item.label} ${item.value}%`}</div>
+                <div>{`${getDongFromAddress(item.label)} ${item.value}%`}</div>
               </S.RegionalRegularRateContentItem>
             ))}
           </S.RegionalRegularRateContentInner>
