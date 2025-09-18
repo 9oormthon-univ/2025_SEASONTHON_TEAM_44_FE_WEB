@@ -48,7 +48,7 @@ const QRCodeTutorial = () => {
       <S.QRCodeTutorialTitle>QR코드, 이렇게 사용해요</S.QRCodeTutorialTitle>
       <S.QRCodeTutorialSection>
         {qrCodeTutorial.map((item) => (
-          <QRCodeTutorialItem id={item.id} title={item.title} description={item.description} lottie={item.lottie} />
+          <QRCodeTutorialItem key={item.id} id={item.id} title={item.title} description={item.description} lottie={item.lottie} />
         ))}
       </S.QRCodeTutorialSection>
     </S.QRCodeTutorialContainer>
