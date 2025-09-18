@@ -9,8 +9,9 @@ import {
   usePostSignUp,
 } from '@hooks/signup/usePostSignUp.ts';
 import * as React from 'react';
-import * as S from  "@components/login/SignUpForm.css.ts"
+import * as S from "@components/login/SignUpForm.css.ts";
 import IcCloseSmallLight from '@icon/ic-close-small-light.svg';
+import styled from "@emotion/styled";
 
 // 입력값을 "HH:MM"으로 변환하는 함수
 const formatTimeInput = (value: string): string => {
@@ -67,7 +68,7 @@ const SignUpForm = () => {
     try {
       const { key } = await uploadImage(file); // <- 네트워크 두 번(presign, PUT) 뜸
       setValue('imageKey', key, { shouldValidate: true });
-    } catch (err) {
+    } catch ( err ) {
       console.error(err);
     }
   };
@@ -94,7 +95,7 @@ const SignUpForm = () => {
         shouldValidate: true,
       });
       setMenuPreviews((prev) => [...prev, ...newPreviews]);
-    } catch (err) {
+    } catch ( err ) {
       console.error('메뉴 이미지 업로드 실패:', err);
       // 사용자에게 에러 알림 UI를 보여주는 것이 좋습니다.
     }
@@ -165,7 +166,10 @@ const SignUpForm = () => {
     <S.SignUpFormContainer>
       <S.SignUpFormTitle>가게 정보 입력</S.SignUpFormTitle>
       <S.SignUpFormInputWrapper>
-        <S.SignUpFormInputLabel>가게 이름</S.SignUpFormInputLabel>
+        <InputHeader>
+          <S.SignUpFormInputLabel>가게 이름</S.SignUpFormInputLabel>
+          <Dot />
+        </InputHeader>
         <S.SignUpFormInput
           type="text"
           placeholder="가게이름을 정확하게 입력해주세요"
@@ -173,9 +177,12 @@ const SignUpForm = () => {
         />
       </S.SignUpFormInputWrapper>
       <S.SignUpFormInputWrapper>
-        <S.SignUpFormInputLabel htmlFor={coverInputId}>
-          대표 사진 업로드
-        </S.SignUpFormInputLabel>
+        <InputHeader>
+          <S.SignUpFormInputLabel htmlFor={coverInputId}>
+            대표 사진 업로드
+          </S.SignUpFormInputLabel>
+          <Dot />
+        </InputHeader>
         <S.SignUpFormImageInputDescription>
           이미지 크기: 362px X 190px
         </S.SignUpFormImageInputDescription>
@@ -201,7 +208,10 @@ const SignUpForm = () => {
         />
       </S.SignUpFormInputWrapper>
       <S.SignUpFormInputWrapper>
-        <S.SignUpFormInputLabel>한줄 소개</S.SignUpFormInputLabel>
+        <InputHeader>
+          <S.SignUpFormInputLabel>한줄 소개</S.SignUpFormInputLabel>
+          <Dot />
+        </InputHeader>
         <S.SignUpFormInput
           type="text"
           placeholder="한줄로 가게를 소개해주세요"
@@ -209,7 +219,10 @@ const SignUpForm = () => {
         />
       </S.SignUpFormInputWrapper>
       <S.SignUpFormInputWrapper>
-        <S.SignUpFormInputLabel>연락처</S.SignUpFormInputLabel>
+        <InputHeader>
+          <S.SignUpFormInputLabel>연락처</S.SignUpFormInputLabel>
+          <Dot />
+        </InputHeader>
         <S.SignUpFormInput
           type="text"
           placeholder="ex) 02-000-0000"
@@ -217,7 +230,10 @@ const SignUpForm = () => {
         />
       </S.SignUpFormInputWrapper>
       <S.SignUpFormInputWrapper>
-        <S.SignUpFormInputLabel>가게 주소 입력</S.SignUpFormInputLabel>
+        <InputHeader>
+          <S.SignUpFormInputLabel>가게 주소 입력</S.SignUpFormInputLabel>
+          <Dot />
+        </InputHeader>
         <S.SignUpFormInput
           type="text"
           placeholder="ex) 성남시 분당구 다시온로 ..."
@@ -225,7 +241,10 @@ const SignUpForm = () => {
         />
       </S.SignUpFormInputWrapper>
       <S.SignUpFormInputWrapper>
-        <S.SignUpFormInputLabel>운영시간</S.SignUpFormInputLabel>
+        <InputHeader>
+          <S.SignUpFormInputLabel>운영시간</S.SignUpFormInputLabel>
+          <Dot />
+        </InputHeader>
         <S.SignUpFormInputRow>
           <S.SignUpFormInputTime
             type="text"
@@ -268,13 +287,13 @@ const SignUpForm = () => {
                 type="button"
                 onClick={() => handleRemoveMenuImage(index)}
               >
-                <img src={IcCloseSmallLight} alt="" style={{objectFit: "cover"}} />
+                <img src={IcCloseSmallLight} alt="" style={{ objectFit: "cover" }} />
               </S.RemoveButton>
             </S.PreviewItem>
           ))}
-
           {/* '사진 추가하기' 버튼 */}
-          {menuPreviews.length < 4 && <S.ImageDropLabel htmlFor={menuInputId} $w={menuPreviews.length > 0 ? 176 : 362} $h={menuPreviews.length > 0 ? 92 : 190}>
+          {menuPreviews.length < 4 && <S.ImageDropLabel htmlFor={menuInputId} $w={menuPreviews.length > 0 ? 176 : 362}
+                                                        $h={menuPreviews.length > 0 ? 92 : 190}>
             <S.Center>
               <img src={IcAddPhoto} alt="" aria-hidden />
               <S.CenterText>
@@ -283,23 +302,6 @@ const SignUpForm = () => {
             </S.Center>
           </S.ImageDropLabel>}
         </S.PreviewContainer>
-
-       {/* <S.ImageDropLabel htmlFor={menuInputId} $w={362} $h={190}>
-          {menuPreviews.length > 0 ? (
-            <S.PreviewImg
-              src={menuPreviews[menuPreviews.length - 1]}
-              alt="대표 사진 미리보기"
-            />
-          ) : (
-            <S.Center>
-              <img src={IcAddPhoto} alt="" aria-hidden />
-              <S.CenterText>
-                {isPending ? '업로드 중...' : '사진 추가하기'}
-              </S.CenterText>
-            </S.Center>
-          )}
-        </S.ImageDropLabel>*/}
-
         <S.HiddenFileInput
           id={menuInputId} // 고유 ID 사용
           type="file"
@@ -316,3 +318,18 @@ const SignUpForm = () => {
 };
 
 export default SignUpForm;
+
+const Dot = styled.div`
+  width: 5px;
+  height: 5px;
+  border-radius: 50%;
+  background-color: ${({ theme }) => theme.colors.primary.primary400};
+  margin-bottom: auto;
+`;
+
+const InputHeader = styled.div`
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 5px;
+`;
