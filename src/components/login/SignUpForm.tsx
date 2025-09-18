@@ -1,133 +1,32 @@
-import { useEffect, useId, useState } from 'react';
+import { useEffect } from 'react';
 import IcAddPhoto from '@icon/ic-add-photo.svg';
-import { z } from 'zod';
-import { useForm } from 'react-hook-form';
-import { zodResolver } from '@hookform/resolvers/zod';
 import { useImageUpload } from '@hooks/signup/useImageUpload.ts';
 import {
   type SignUpRequest,
   usePostSignUp,
 } from '@hooks/signup/usePostSignUp.ts';
-import * as React from 'react';
 import * as S from "@components/login/SignUpForm.css.ts";
 import IcCloseSmallLight from '@icon/ic-close-small-light.svg';
 import styled from "@emotion/styled";
-
-// 입력값을 "HH:MM"으로 변환하는 함수
-const formatTimeInput = (value: string): string => {
-  const digits = value.replace(/\D/g, '');
-
-  if (digits.length <= 2) {
-    return digits;
-  }
-
-  return `${digits.slice(0, 2)}:${digits.slice(2, 4)}`;
-};
-
-const scheme = z.object({
-  name: z.string().min(1, '가게 이름을 입력해주세요'),
-  imageKey: z.string().min(1, '가게 대표 사진을 등록해주세요'),
-  introduction: z.string().min(1),
-  phone: z.string().min(1, '가게 연락처를 입력해주세요'),
-  address: z.string().min(1, '가게 주소를 입력해주세요'),
-  detailAddress: z.string().min(1, '가게 상세 주소를 입력해주세요'),
-  open: z.string().min(1, '가게 운영시간을 입력해주세요'),
-  close: z.string().min(1, '가게 운영시간을 입력해주세요'),
-  menuImageKeys: z.array(z.string()).min(0),
-});
-
-export type SignUpFormType = z.infer<typeof scheme>;
+import { formatTimeInput } from "@utils/date.ts";
+import { type SignUpFormType, useSignUpForm } from "@hooks/signup/useSignUpForm.ts";
+import { useHandleImage } from "@hooks/signup/useHandleImage.ts";
 
 const SignUpForm = () => {
-  const [coverPreview, setCoverPreview] = useState<string | null>(null);
-  const coverInputId = useId();
-
-  const [menuPreviews, setMenuPreviews] = useState<string[]>([]);
-  const menuInputId = useId(); // 메뉴 업로드 input을 위한 고유 id
-
-  const { register, setValue, getValues } = useForm<SignUpFormType>({
-    resolver: zodResolver(scheme),
-    defaultValues: {
-      menuImageKeys: [],
-    },
-  });
+  const { register, setValue, getValues } = useSignUpForm();
   const { mutate: signUp } = usePostSignUp();
-
-  /* 이미지 핸들링 함수 */
   const { mutateAsync: uploadImage, isPending } = useImageUpload();
-
-  /* 이미지 핸들링 함수 */
-  const handleCoverChange = async (e: React.ChangeEvent<HTMLInputElement>) => {
-    const file = e.target.files?.[0];
-    if (!file) return;
-
-    // 미리보기
-    const objectUrl = URL.createObjectURL(file);
-    setCoverPreview(objectUrl);
-
-    try {
-      const { key } = await uploadImage(file); // <- 네트워크 두 번(presign, PUT) 뜸
-      setValue('imageKey', key, { shouldValidate: true });
-    } catch ( err ) {
-      console.error(err);
-    }
-  };
-
-  const handleMenuImagesChange = async (
-    e: React.ChangeEvent<HTMLInputElement>,
-  ) => {
-    const files = e.target.files;
-    if (!files || files.length === 0) return;
-
-    // 여러 파일을 동시에 업로드하기 위해 Promise.all 사용
-    const uploadPromises = Array.from(files).map((file) => uploadImage(file));
-
-    try {
-      const results = await Promise.all(uploadPromises); // [{key: '...'}, {key: '...'}]
-      const newKeys = results.map((r) => r.key);
-      const newPreviews = Array.from(files).map((file) =>
-        URL.createObjectURL(file),
-      );
-
-      // 기존 값에 새로 업로드된 값들을 추가
-      const currentKeys = getValues('menuImageKeys') || [];
-      setValue('menuImageKeys', [...currentKeys, ...newKeys], {
-        shouldValidate: true,
-      });
-      setMenuPreviews((prev) => [...prev, ...newPreviews]);
-    } catch ( err ) {
-      console.error('메뉴 이미지 업로드 실패:', err);
-      // 사용자에게 에러 알림 UI를 보여주는 것이 좋습니다.
-    }
-  };
-
-  const handleRemoveMenuImage = (indexToRemove: number) => {
-    // 1. 미리보기 URL 메모리 해제
-    URL.revokeObjectURL(menuPreviews[indexToRemove]);
-
-    // 2. 미리보기 상태에서 해당 인덱스 제거
-    setMenuPreviews(prev => prev.filter((_, index) => index !== indexToRemove));
-
-    // 3. react-hook-form 상태에서 해당 키 제거
-    const currentKeys = getValues("menuImageKeys") || [];
-    setValue(
-      "menuImageKeys",
-      currentKeys.filter((_, index) => index !== indexToRemove),
-      { shouldValidate: true },
-    );
-  };
-
-  useEffect(() => {
-    // 컴포넌트가 언마운트될 때 생성된 모든 Object URL을 해제
-    return () => {
-      if (coverPreview) URL.revokeObjectURL(coverPreview);
-      menuPreviews.forEach((url) => URL.revokeObjectURL(url));
-    };
-  }, [coverPreview, menuPreviews]);
+  const {
+    handleMenuImagesChange,
+    handleCoverChange,
+    coverPreview,
+    menuPreviews,
+    menuInputId,
+    handleRemoveMenuImage,
+    coverInputId,
+  } = useHandleImage(setValue, getValues, uploadImage);
 
   /* 운영 시간 함수 */
-
-  // open/close는 화면에 입력창이 없으니 미리 등록
   useEffect(() => {
     register('open');
     register('close');

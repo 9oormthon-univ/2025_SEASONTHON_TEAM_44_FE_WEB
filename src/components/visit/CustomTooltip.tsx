@@ -1,11 +1,6 @@
 import * as S from "@components/visit/CustomTooltip.css.ts";
 import type { DailyVisit, WeeklyVisit } from "@/types/visit.ts";
-
-const getTodyDate = () => {
-  const todayDate = new Date().toLocaleDateString().replaceAll(" ", "");
-  const lastIndex = todayDate.length - 1;
-  return todayDate.slice(0, lastIndex);
-};
+import { getTodyDate } from "@utils/date.ts";
 
 interface CustomTooltipProps {
   active?: boolean;
