@@ -10,10 +10,10 @@ interface NoticeResponseRateProps {
 }
 
 const NoticeResponseRate = ({ unconfirmedCount, confirmedCount, title }: NoticeResponseRateProps) => {
-
-  const totalCount = confirmedCount + unconfirmedCount;
+  const formattedUnconfirmedCount = unconfirmedCount < 0 ? 0 : unconfirmedCount;
+  const totalCount = confirmedCount + formattedUnconfirmedCount;
   const confirmedRate = confirmedCount / totalCount * 100;
-  const unconfirmedRate = unconfirmedCount / totalCount * 100;
+  const unconfirmedRate = formattedUnconfirmedCount / totalCount * 100;
 
   const newNoticeData = [
     {

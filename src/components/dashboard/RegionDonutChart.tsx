@@ -80,7 +80,7 @@ const RegionDonutChart = ({
           height="100%"
         >
           {/* ← 폰트/컬러는 theme 값 그대로 사용 */}
-          <NameLabel style={{ color: nameColor }}>{getDongFromAddress(payload.label)}</NameLabel>
+          <NameLabel>{getDongFromAddress(payload.label)}</NameLabel>
         </foreignObject>
 
         {/* 퍼센트: 기준점 아래 */}
@@ -160,7 +160,7 @@ const ChartBox = styled.div`
 const NameLabel = styled.div`
   display: inline-block;
   font: ${({ theme }) => theme.fonts.sub2};
-  color: ${({ theme }) => theme.colors.primary.primary700};
+  color: ${({ theme }) => theme.colors.black};
   text-align: center;
   white-space: nowrap;
 `;
