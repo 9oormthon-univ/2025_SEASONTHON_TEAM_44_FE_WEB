@@ -16,9 +16,9 @@ const QRCodeTutorialItem = ({ id, description, lottie, title }: QRCodeTutorialIt
 
   const [isHovered, setIsHovered] = useState(false);
 
-  const dotLottieRefCallback = (dotLottie: DotLottie | null) => {
+/*  const dotLottieRefCallback = (dotLottie: DotLottie | null) => {
     dotLottieRef.current = dotLottie;
-  };
+  };*/
 
 
   useEffect(() => {
@@ -52,18 +52,22 @@ const QRCodeTutorialItem = ({ id, description, lottie, title }: QRCodeTutorialIt
       onMouseOver={() => setIsHovered(true)}
       onMouseOut={() => setIsHovered(false)}>
       {id === 1 ? <DotLottieReact
-          dotLottieRefCallback={dotLottieRefCallback}
+          /*dotLottieRefCallback={dotLottieRefCallback}*/
           src="https://lottie.host/7d50ecd3-f646-48b9-a68c-52f9f7fed2f3/ByOJUDxzbs.json"
           style={{ width: "100%", height: "180px", objectFit: "cover" }}
           layout={{ fit: "cover" }}
+          autoplay
+          loop
         /> :
         <Lottie
-          lottieRef={lottieRef}
+          /*lottieRef={lottieRef}*/
           animationData={lottie}
           rendererSettings={{
             preserveAspectRatio: "xMidYMid slice",
           }}
           style={{ width: "100%", height: "180px", objectFit: "cover" }}
+          autoplay
+          loop
         />
       }
       <S.QRCodeTutorialItemInner>
