@@ -38,6 +38,6 @@ export const existsStore = async () => {
 };
 
 export const postStoresInsight = async () => {
-  const response = await axiosInstance.post('/api/stores/insight');
+  const response = await axiosInstance.post('/stores/insight');
   return response.data;
 };
